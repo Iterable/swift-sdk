@@ -19,8 +19,10 @@
 		ACA3A14020E2F6B100FEF74F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA3A13F20E2F6B100FEF74F /* Assets.xcassets */; };
 		ACA3A14320E2F6B100FEF74F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA3A14120E2F6B100FEF74F /* LaunchScreen.storyboard */; };
 		ACA3A15120E2F83E00FEF74F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3A15020E2F83E00FEF74F /* NotificationService.swift */; };
-		ACA3A15520E2F83E00FEF74F /* swift-sample-app-notification-extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = ACA3A14E20E2F83D00FEF74F /* swift-sample-app-notification-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		ACA3A15520E2F83E00FEF74F /* swift-sample-app-notification-extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = ACA3A14E20E2F83D00FEF74F /* swift-sample-app-notification-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		ACE7624B20FEB2C20040A002 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE7624A20FEB2C20040A002 /* LoginViewController.swift */; };
+		C3353E992B1E65390031F9FE /* SwiftSampleAppUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3353E982B1E65390031F9FE /* SwiftSampleAppUITest.swift */; };
+		C3353EA22B1E6C1F0031F9FE /* XCUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3353EA12B1E6C1F0031F9FE /* XCUITestBase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,18 +33,25 @@
 			remoteGlobalIDString = ACA3A14D20E2F83D00FEF74F;
 			remoteInfo = "swift-sample-app-notification-extension";
 		};
+		C3353E9C2B1E65390031F9FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ACA3A12D20E2F6AF00FEF74F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACA3A13420E2F6AF00FEF74F;
+			remoteInfo = "swift-sample-app";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		ACA3A15920E2F83E00FEF74F /* Embed App Extensions */ = {
+		ACA3A15920E2F83E00FEF74F /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				ACA3A15520E2F83E00FEF74F /* swift-sample-app-notification-extension.appex in Embed App Extensions */,
+				ACA3A15520E2F83E00FEF74F /* swift-sample-app-notification-extension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -65,6 +74,9 @@
 		ACA3A16420E2FC7500FEF74F /* swift-sample-app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "swift-sample-app.entitlements"; sourceTree = "<group>"; };
 		ACE7624A20FEB2C20040A002 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		ACFA148520E3033700AF4A5A /* CoffeeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeType.swift; sourceTree = "<group>"; };
+		C3353E962B1E65390031F9FE /* SwiftSampleAppUITest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftSampleAppUITest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3353E982B1E65390031F9FE /* SwiftSampleAppUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSampleAppUITest.swift; sourceTree = "<group>"; };
+		C3353EA12B1E6C1F0031F9FE /* XCUITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITestBase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +93,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				551A5FF3251AB19B0004C9A0 /* IterableAppExtensions in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3353E932B1E65390031F9FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +140,7 @@
 			children = (
 				ACA3A13520E2F6AF00FEF74F /* swift-sample-app.app */,
 				ACA3A14E20E2F83D00FEF74F /* swift-sample-app-notification-extension.appex */,
+				C3353E962B1E65390031F9FE /* SwiftSampleAppUITest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,6 +148,7 @@
 		ACA3A13720E2F6AF00FEF74F /* swift-sample-app */ = {
 			isa = PBXGroup;
 			children = (
+				C3353E972B1E65390031F9FE /* swift-sample-app-ui-test */,
 				AC5ECD9D20E303F50081E1DA /* ViewControllers */,
 				AC5ECD9B20E3038B0081E1DA /* Deep Link Handling */,
 				ACFA148620E3034800AF4A5A /* Assets */,
@@ -182,6 +203,15 @@
 			name = Storyboards;
 			sourceTree = "<group>";
 		};
+		C3353E972B1E65390031F9FE /* swift-sample-app-ui-test */ = {
+			isa = PBXGroup;
+			children = (
+				C3353E982B1E65390031F9FE /* SwiftSampleAppUITest.swift */,
+				C3353EA12B1E6C1F0031F9FE /* XCUITestBase.swift */,
+			);
+			path = "swift-sample-app-ui-test";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -192,7 +222,7 @@
 				ACA3A13120E2F6AF00FEF74F /* Sources */,
 				ACA3A13220E2F6AF00FEF74F /* Frameworks */,
 				ACA3A13320E2F6AF00FEF74F /* Resources */,
-				ACA3A15920E2F83E00FEF74F /* Embed App Extensions */,
+				ACA3A15920E2F83E00FEF74F /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -227,14 +257,32 @@
 			productReference = ACA3A14E20E2F83D00FEF74F /* swift-sample-app-notification-extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		C3353E952B1E65390031F9FE /* SwiftSampleAppUITest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3353EA02B1E65390031F9FE /* Build configuration list for PBXNativeTarget "SwiftSampleAppUITest" */;
+			buildPhases = (
+				C3353E922B1E65390031F9FE /* Sources */,
+				C3353E932B1E65390031F9FE /* Frameworks */,
+				C3353E942B1E65390031F9FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3353E9D2B1E65390031F9FE /* PBXTargetDependency */,
+			);
+			name = SwiftSampleAppUITest;
+			productName = SwiftSampleAppUITest;
+			productReference = C3353E962B1E65390031F9FE /* SwiftSampleAppUITest.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		ACA3A12D20E2F6AF00FEF74F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1200;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = Iterable;
 				TargetAttributes = {
 					ACA3A13420E2F6AF00FEF74F = {
@@ -253,6 +301,10 @@
 						CreatedOnToolsVersion = 9.4;
 						LastSwiftMigration = 1030;
 					};
+					C3353E952B1E65390031F9FE = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = ACA3A13420E2F6AF00FEF74F;
+					};
 				};
 			};
 			buildConfigurationList = ACA3A13020E2F6AF00FEF74F /* Build configuration list for PBXProject "swift-sample-app" */;
@@ -270,6 +322,7 @@
 			targets = (
 				ACA3A13420E2F6AF00FEF74F /* swift-sample-app */,
 				ACA3A14D20E2F83D00FEF74F /* swift-sample-app-notification-extension */,
+				C3353E952B1E65390031F9FE /* SwiftSampleAppUITest */,
 			);
 		};
 /* End PBXProject section */
@@ -286,6 +339,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		ACA3A14C20E2F83D00FEF74F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3353E942B1E65390031F9FE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -317,6 +377,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C3353E922B1E65390031F9FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3353E992B1E65390031F9FE /* SwiftSampleAppUITest.swift in Sources */,
+				C3353EA22B1E6C1F0031F9FE /* XCUITestBase.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -324,6 +393,11 @@
 			isa = PBXTargetDependency;
 			target = ACA3A14D20E2F83D00FEF74F /* swift-sample-app-notification-extension */;
 			targetProxy = ACA3A15320E2F83E00FEF74F /* PBXContainerItemProxy */;
+		};
+		C3353E9D2B1E65390031F9FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ACA3A13420E2F6AF00FEF74F /* swift-sample-app */;
+			targetProxy = C3353E9C2B1E65390031F9FE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -380,7 +454,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development: Justin Yu (23ZWSJHXW7)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -468,8 +542,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "swift-sample-app/swift-sample-app.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BP98Z28R86;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BP98Z28R86;
 				INFOPLIST_FILE = "swift-sample-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -477,6 +554,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "ios-dev-swift-sample-app";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -487,8 +566,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "swift-sample-app/swift-sample-app.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BP98Z28R86;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BP98Z28R86;
 				INFOPLIST_FILE = "swift-sample-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -496,6 +577,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "ios-dev-swift-sample-app";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -504,8 +587,11 @@
 		ACA3A15720E2F83E00FEF74F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BP98Z28R86;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BP98Z28R86;
 				INFOPLIST_FILE = "swift-sample-app-notification-extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -514,6 +600,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app.swift-sample-app-notification-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "ios-dev-swift-sample-app-notification-extension";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -523,8 +611,10 @@
 		ACA3A15820E2F83E00FEF74F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BP98Z28R86;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BP98Z28R86;
 				INFOPLIST_FILE = "swift-sample-app-notification-extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -533,9 +623,58 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app.swift-sample-app-notification-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "ios-dev-swift-sample-app-notification-extension";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C3353E9E2B1E65390031F9FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = BP98Z28R86;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app.SwiftSampleAppUITest";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "ios-dev-swift-sample-app-wildcard";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "swift-sample-app";
+			};
+			name = Debug;
+		};
+		C3353E9F2B1E65390031F9FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BP98Z28R86;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app.SwiftSampleAppUITest";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "swift-sample-app";
 			};
 			name = Release;
 		};
@@ -565,6 +704,15 @@
 			buildConfigurations = (
 				ACA3A15720E2F83E00FEF74F /* Debug */,
 				ACA3A15820E2F83E00FEF74F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3353EA02B1E65390031F9FE /* Build configuration list for PBXNativeTarget "SwiftSampleAppUITest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3353E9E2B1E65390031F9FE /* Debug */,
+				C3353E9F2B1E65390031F9FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

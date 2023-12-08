@@ -1,0 +1,54 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "build swift-sample-app .ipa and ui-test.zip for browserstack"
+  lane :build_for_browserstack do |options|
+    xcodes(version: "14.2", select_for_current_build_only: true)
+    ensure_xcode_version(version: "14.2")
+    build_swift_sample_app(plist:options[:plist])
+    build_ui_tests
+  end
+  
+  desc "build swift-sample-app .ipa"
+  lane :build_swift_sample_app do |options|
+    build_app(
+      project: "sample-apps/swift-sample-app/swift-sample-app.xcodeproj",
+      configuration: "Debug",
+      scheme: "swift-sample-app",
+      silent: true,
+      clean: true,
+      sdk: "iphoneos",
+      destination: "generic/platform=iOS",
+      output_directory: "./build-swift-sample-app",
+      output_name: "swift-sample-app.ipa",
+      export_method: "development",
+      export_options: {
+        provisioningProfiles: {
+          "iterable.swift-sample-app" => "ios-dev-swift-sample-app",
+          "iterable.swift-sample-app.swift-sample-app-notification-extension" => "ios-dev-swift-sample-app-notification-extension",
+        }
+      }
+    )
+  end
+
+  desc "build swift-sample-app UI tests"
+  lane :build_ui_tests do      
+    scan(
+      project: "sample-apps/swift-sample-app/swift-sample-app.xcodeproj",
+      configuration: "Debug",
+      scheme: "swift-sample-app",
+      sdk: "iphoneos",
+      destination: "generic/platform=iOS",
+      skip_build: false,
+      derived_data_path: "./build-swift-sample-app",
+      build_for_testing: true,
+      clean: true,
+      xcargs: "-allowProvisioningUpdates"
+    )
+    
+    zip(
+      path: "./build-swift-sample-app/Build/Products/Debug-iphoneos/SwiftSampleAppUITest-Runner.app",
+      output_path: "./build-swift-sample-app/swift-sample-app-ui-test.zip"
+    )
+  end
+end
