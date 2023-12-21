@@ -233,6 +233,32 @@ struct OnlineRequestProcessor: RequestProcessorProtocol {
                     requestIdentifier: "inAppConsumeWithSource")
     }
     
+    @discardableResult
+    func subscribeUser(_email: String?,
+                    userId: String?,
+                    subscriptionId: String,
+                    subscriptionGroup: String,
+                    onSuccess: OnSuccessHandler? = nil,
+                    onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        sendRequest(requestProvider: { apiClient.subscribeUser(_email: _email, userId: userId, subscriptionId: subscriptionId, subscriptionGroup:           subscriptionGroup)},
+                    successHandler: onSuccess,
+                    failureHandler: onFailure,
+                    requestIdentifier: "subscribeUser")
+    }
+    
+    @discardableResult
+    func unSubscribeUser(_email: String?,
+                    userId: String?,
+                    subscriptionId: String,
+                    subscriptionGroup: String,
+                    onSuccess: OnSuccessHandler? = nil,
+                    onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        sendRequest(requestProvider: { apiClient.unSubscribeUser(_email: _email, userId: userId, subscriptionId: subscriptionId, subscriptionGroup:           subscriptionGroup)},
+                    successHandler: onSuccess,
+                    failureHandler: onFailure,
+                    requestIdentifier: "unSubscribeUser")
+    }
+    
     func getRemoteConfiguration() -> Pending<RemoteConfiguration, SendRequestError> {
         apiClient.getRemoteConfiguration()
     }

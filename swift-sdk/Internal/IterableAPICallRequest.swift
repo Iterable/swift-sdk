@@ -29,10 +29,20 @@ struct IterableAPICallRequest {
         case let .post(postRequest):
             return IterableRequestUtil.createPostRequest(forApiEndPoint: endpoint,
                                                          path: postRequest.path,
-                                                         headers: createIterableHeaders(sentAt: sentAt,
-                                                                                        processorType: processorType),
+                                                         headers: createIterableHeaders(sentAt: sentAt, processorType: processorType),
                                                          args: postRequest.args,
                                                          body: postRequest.body)
+        case let .patch(patchRequest):
+            return IterableRequestUtil.createPatchRequest(forApiEndPoint: endpoint,
+                                                         path: patchRequest.path,
+                                                         headers: createIterableHeaders(sentAt: sentAt, processorType: processorType),
+                                                         args: patchRequest.args)
+        case let .delete(deleteRequest):
+            return IterableRequestUtil.createDeleteRequest(forApiEndPoint: endpoint,
+                                                         path: deleteRequest.path,
+                                                         headers: createIterableHeaders(sentAt: sentAt,
+                                                                                        processorType: processorType),
+                                                         args: deleteRequest.args)
         }
     }
     
@@ -41,6 +51,10 @@ struct IterableAPICallRequest {
         case .get(let request):
             return request.path
         case .post(let request):
+            return request.path
+        case .patch(let request):
+            return request.path
+        case .delete(let request):
             return request.path
         }
     }

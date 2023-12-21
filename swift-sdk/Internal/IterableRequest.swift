@@ -10,6 +10,8 @@ import Foundation
 enum IterableRequest {
     case get(GetRequest)
     case post(PostRequest)
+    case patch(PatchRequest)
+    case delete(DeleteRequest)
 }
 
 extension IterableRequest: Codable {
@@ -25,9 +27,15 @@ extension IterableRequest: Codable {
         case IterableRequest.requestTypeGet:
             let request = try container.decode(GetRequest.self, forKey: .value)
             self = .get(request)
+        case IterableRequest.requestTypePatch:
+            let request = try container.decode(PatchRequest.self, forKey: .value)
+            self = .patch(request)
         case IterableRequest.requestTypePost:
             let request = try container.decode(PostRequest.self, forKey: .value)
             self = .post(request)
+        case IterableRequest.requestTypeDelete:
+            let request = try container.decode(DeleteRequest.self, forKey: .value)
+            self = .delete(request)
         default:
             throw IterableError.general(description: "Unknown request type: \(type)")
         }
@@ -39,8 +47,14 @@ extension IterableRequest: Codable {
         case let .get(request):
             try container.encode(IterableRequest.requestTypeGet, forKey: .type)
             try container.encode(request, forKey: .value)
+        case let .patch(request):
+            try container.encode(IterableRequest.requestTypePatch, forKey: .type)
+            try container.encode(request, forKey: .value)
         case let .post(request):
             try container.encode(IterableRequest.requestTypePost, forKey: .type)
+            try container.encode(request, forKey: .value)
+        case let .delete(request):
+            try container.encode(IterableRequest.requestTypeDelete, forKey: .type)
             try container.encode(request, forKey: .value)
         }
     }
@@ -54,10 +68,22 @@ extension IterableRequest: Codable {
     }
     
     private static let requestTypeGet = "get"
+    private static let requestTypePatch = "patch"
     private static let requestTypePost = "post"
+    private static let requestTypeDelete = "delete"
 }
 
 struct GetRequest: Codable {
+    let path: String
+    let args: [String: String]?
+}
+
+struct PatchRequest: Codable {
+    let path: String
+    let args: [String: String]?
+}
+
+struct DeleteRequest: Codable {
     let path: String
     let args: [String: String]?
 }

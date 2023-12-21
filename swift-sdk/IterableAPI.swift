@@ -688,6 +688,58 @@ import UIKit
         implementation?.inAppConsume(message: message, location: location, source: source)
     }
     
+    /// Subscribe user by email or userId
+    ///
+    /// - Parameters:
+    ///    - email: Subscribe by email, but it's optional
+    ///    - usrId: Subscribe by userId, but it's optional
+    ///    - subscriptionId: Subscription Group ID
+    ///    - subscriptionGroup: Subscription Group Name
+    ///    - onSuccess: `OnSuccessHandler` to invoke if update is successful
+    ///    - onFailure: `OnFailureHandler` to invoke if update fails
+    ///
+    /// - SeeAlso: OnSuccessHandler, OnFailureHandler
+    @objc(subscribeUser:userId:subscriptionId:subscriptionGroup:onSuccess:onFailure:)
+    public static func subscribeUser(_email: String?,
+                                     userId: String?,
+                                     subscriptionId: String,
+                                     subscriptionGroup: String,
+                                  onSuccess: OnSuccessHandler? = nil,
+                                  onFailure: OnFailureHandler? = nil) {
+        implementation?.subscribeUser(_email: _email,
+                                    userId: userId,
+                                    subscriptionId: subscriptionId,
+                                    subscriptionGroup: subscriptionGroup,
+                                    onSuccess: onSuccess,
+                                    onFailure: onFailure)
+    }
+    
+    /// UnSubscribe user by email or userId
+    ///
+    /// - Parameters:
+    ///    - email: Subscribe by email, but it's optional
+    ///    - usrId: Subscribe by userId, but it's optional
+    ///    - subscriptionId: Subscription Group ID
+    ///    - subscriptionGroup: Subscription Group Name
+    ///    - onSuccess: `OnSuccessHandler` to invoke if update is successful
+    ///    - onFailure: `OnFailureHandler` to invoke if update fails
+    ///
+    /// - SeeAlso: OnSuccessHandler, OnFailureHandler
+    @objc(unSubscribeUser:userId:subscriptionId:subscriptionGroup:onSuccess:onFailure:)
+    public static func unSubscribeUser(_email: String?,
+                                     userId: String?,
+                                     subscriptionId: String,
+                                     subscriptionGroup: String,
+                                  onSuccess: OnSuccessHandler? = nil,
+                                  onFailure: OnFailureHandler? = nil) {
+        implementation?.unSubscribeUser(_email: _email,
+                                    userId: userId,
+                                    subscriptionId: subscriptionId,
+                                    subscriptionGroup: subscriptionGroup,
+                                    onSuccess: onSuccess,
+                                    onFailure: onFailure)
+    }
+    
     /// Tracks analytics data from a session of using an inbox UI
     /// NOTE: this is not normally used publicly, but is needed for our React Native SDK implementation
     ///

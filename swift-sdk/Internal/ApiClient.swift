@@ -216,4 +216,14 @@ extension ApiClient: ApiClientProtocol {
         let result = createRequestCreator().flatMap { $0.createGetRemoteConfigurationRequest() }
         return send(iterableRequestResult: result)
     }
+    
+    func subscribeUser(_email: String?, userId: String?, subscriptionId: String, subscriptionGroup: String) -> Pending<SendRequestValue, SendRequestError> {
+        let result = createRequestCreator().flatMap { $0.createSubscribeUserRequest(_email: _email, userId: userId, subscriptionId: subscriptionId, subscriptionGroup: subscriptionGroup) }
+        return send(iterableRequestResult: result)
+    }
+    
+    func unSubscribeUser(_email: String?, userId: String?, subscriptionId: String, subscriptionGroup: String) -> Pending<SendRequestValue, SendRequestError> {
+        let result = createRequestCreator().flatMap { $0.createUnSubscribeUserRequest(_email: _email, userId: userId, subscriptionId: subscriptionId, subscriptionGroup: subscriptionGroup) }
+        return send(iterableRequestResult: result)
+    }
 }

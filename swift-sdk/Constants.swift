@@ -19,6 +19,8 @@ enum Const {
     enum Http {
         static let GET = "GET"
         static let POST = "POST"
+        static let PATCH = "PATCH"
+        static let DELETE = "DELETE"
     }
     
     enum Path {
@@ -39,6 +41,7 @@ enum Const {
         static let updateEmail = "users/updateEmail"
         static let updateSubscriptions = "users/updateSubscriptions"
         static let getRemoteConfiguration = "mobile/getRemoteConfiguration"
+        static let subscriptions = "subscriptions/"
     }
     
     public enum UserDefault {

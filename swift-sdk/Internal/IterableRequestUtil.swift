@@ -23,6 +23,26 @@ struct IterableRequestUtil {
         return request
     }
     
+    static func createPatchRequest(forApiEndPoint apiEndPoint: String,
+                                  path: String,
+                                  headers: [String: String]? = nil,
+                                  args: [String: String]? = nil) -> URLRequest? {
+        createPatchRequest1(forApiEndPoint: apiEndPoint,
+                          path: path,
+                          headers: headers,
+                          args: args)
+    }
+    
+    static func createDeleteRequest(forApiEndPoint apiEndPoint: String,
+                                  path: String,
+                                  headers: [String: String]? = nil,
+                                  args: [String: String]? = nil) -> URLRequest? {
+        createDeleteRequest1(forApiEndPoint: apiEndPoint,
+                          path: path,
+                          headers: headers,
+                          args: args)
+    }
+    
     static func createPostRequest(forApiEndPoint apiEndPoint: String,
                                   path: String,
                                   headers: [String: String]? = nil,
@@ -60,6 +80,37 @@ struct IterableRequestUtil {
         addHeaders(headers: headers, toRequest: &request)
         request.httpMethod = Const.Http.POST
         request.httpBody = body
+        
+        return request
+    }
+    
+    static func createPatchRequest1(forApiEndPoint apiEndPoint: String,
+                                  path: String,
+                                  headers: [String: String]? = nil,
+                                  args: [String: String]? = nil) -> URLRequest? {
+        guard let url = getUrlComponents(forApiEndPoint: apiEndPoint, path: path, args: args)?.url else {
+            return nil
+        }
+        
+        var request = URLRequest(url: url)
+        addHeaders(headers: headers, toRequest: &request)
+        request.httpMethod = Const.Http.PATCH
+        
+        return request
+    }
+    
+    static func createDeleteRequest1(forApiEndPoint apiEndPoint: String,
+                                  path: String,
+                                  headers: [String: String]? = nil,
+                                  args: [String: String]? = nil,
+                                  body: Data? = nil) -> URLRequest? {
+        guard let url = getUrlComponents(forApiEndPoint: apiEndPoint, path: path, args: args)?.url else {
+            return nil
+        }
+        
+        var request = URLRequest(url: url)
+        addHeaders(headers: headers, toRequest: &request)
+        request.httpMethod = Const.Http.DELETE
         
         return request
     }

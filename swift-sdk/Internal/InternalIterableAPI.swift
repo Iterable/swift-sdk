@@ -425,6 +425,26 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
                                     onFailure: onFailure)
     }
     
+    @discardableResult
+    func subscribeUser(_email: String?,
+                       userId: String?,
+                       subscriptionId: String,
+                       subscriptionGroup: String,
+                    onSuccess: OnSuccessHandler? = nil,
+                    onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        requestHandler.subscribeUser(_email: _email, userId: userId, subscriptionId: subscriptionId, subscriptionGroup: subscriptionGroup, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
+    @discardableResult
+    func unSubscribeUser(_email: String?,
+                       userId: String?,
+                       subscriptionId: String,
+                       subscriptionGroup: String,
+                    onSuccess: OnSuccessHandler? = nil,
+                    onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        requestHandler.unSubscribeUser(_email: _email, userId: userId, subscriptionId: subscriptionId, subscriptionGroup: subscriptionGroup, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
     // MARK: - Private/Internal
     
     private var config: IterableConfig

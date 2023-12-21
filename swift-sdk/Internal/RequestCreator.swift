@@ -442,6 +442,40 @@ struct RequestCreator {
         return .success(.get(createGetRequest(forPath: Const.Path.getRemoteConfiguration, withArgs: args as! [String: String])))
     }
     
+    func createSubscribeUserRequest(_email: String?, userId: String?, subscriptionId: String, subscriptionGroup: String) -> Result<IterableRequest, IterableError> {
+        if case .none = auth.emailOrUserId {
+            ITBError(Self.authMissingMessage)
+            return .failure(IterableError.general(description: Self.authMissingMessage))
+        }
+        
+        var endpoint: String
+
+        if !userId!.isEmpty {
+            endpoint = Const.Path.subscriptions + subscriptionGroup + "/" + subscriptionId + "/byUserId/" + userId!
+        } else {
+            endpoint = Const.Path.subscriptions + subscriptionGroup + "/" + subscriptionId + "/user/" + _email!
+        }
+        
+        return .success(.patch(createPatchRequest(forPath: endpoint, withArgs: [String: String]())))
+    }
+    
+    func createUnSubscribeUserRequest(_email: String?, userId: String?, subscriptionId: String, subscriptionGroup: String) -> Result<IterableRequest, IterableError> {
+        if case .none = auth.emailOrUserId {
+            ITBError(Self.authMissingMessage)
+            return .failure(IterableError.general(description: Self.authMissingMessage))
+        }
+        
+        var endpoint: String
+
+        if !userId!.isEmpty {
+            endpoint = Const.Path.subscriptions + subscriptionGroup + "/" + subscriptionId + "/byUserId/" + userId!
+        } else {
+            endpoint = Const.Path.subscriptions + subscriptionGroup + "/" + subscriptionId + "/user/" + _email!
+        }
+        
+        return .success(.delete(createDeleteRequest(forPath: endpoint, withArgs: [String: String]())))
+    }
+    
     // MARK: - PRIVATE
     
     private static let authMissingMessage = "Both email and userId are nil"
@@ -454,6 +488,16 @@ struct RequestCreator {
     
     private func createGetRequest(forPath path: String, withArgs args: [String: String]) -> GetRequest {
         GetRequest(path: path,
+                   args: args)
+    }
+    
+    private func createPatchRequest(forPath path: String, withArgs args: [String: String]?) -> PatchRequest {
+        PatchRequest(path: path,
+                   args: args)
+    }
+    
+    private func createDeleteRequest(forPath path: String, withArgs args: [String: String]?) -> DeleteRequest {
+        DeleteRequest(path: path,
                    args: args)
     }
     

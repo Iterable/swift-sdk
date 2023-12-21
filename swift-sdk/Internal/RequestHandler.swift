@@ -257,6 +257,36 @@ class RequestHandler: RequestHandlerProtocol {
         }
     }
     
+    @discardableResult
+    func subscribeUser(_email: String?,
+                       userId: String?,
+                       subscriptionId: String,
+                       subscriptionGroup: String,
+                       onSuccess: OnSuccessHandler?,
+                       onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError> {
+        onlineProcessor.subscribeUser(_email: _email,
+                                   userId: userId,
+                                   subscriptionId: subscriptionId,
+                                   subscriptionGroup: subscriptionGroup,
+                                   onSuccess: onSuccess,
+                                   onFailure: onFailure)
+    }
+    
+    @discardableResult
+    func unSubscribeUser(_email: String?,
+                       userId: String?,
+                       subscriptionId: String,
+                       subscriptionGroup: String,
+                       onSuccess: OnSuccessHandler?,
+                       onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError> {
+        onlineProcessor.unSubscribeUser(_email: _email,
+                                   userId: userId,
+                                   subscriptionId: subscriptionId,
+                                   subscriptionGroup: subscriptionGroup,
+                                   onSuccess: onSuccess,
+                                   onFailure: onFailure)
+    }
+    
     func getRemoteConfiguration() -> Pending<RemoteConfiguration, SendRequestError> {
         onlineProcessor.getRemoteConfiguration()
     }

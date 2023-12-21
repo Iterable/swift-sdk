@@ -117,6 +117,22 @@ protocol RequestHandlerProtocol: AnyObject {
                       inboxSessionId: String?,
                       onSuccess: OnSuccessHandler?,
                       onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError>
+    
+    @discardableResult
+    func subscribeUser(_email: String?,
+                       userId: String?,
+                       subscriptionId: String,
+                       subscriptionGroup: String,
+                    onSuccess: OnSuccessHandler?,
+                    onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError>
+    
+    @discardableResult
+    func unSubscribeUser(_email: String?,
+                       userId: String?,
+                       subscriptionId: String,
+                       subscriptionGroup: String,
+                    onSuccess: OnSuccessHandler?,
+                    onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError>
 
     func handleLogout() throws
     
