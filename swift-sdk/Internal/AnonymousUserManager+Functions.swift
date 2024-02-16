@@ -60,15 +60,15 @@ struct CriteriaCompletionChecker {
         self.anonymousCriteria = anonymousCriteria
     }
     
-    func getMatchedCriteria() -> Int? {
-        var criteriaId: Int? = nil
+    func getMatchedCriteria() -> String? {
+        var criteriaId: String? = nil
         if let json = try? JSONSerialization.jsonObject(with: anonymousCriteria, options: []) as? [String: Any] {
             // Access the criteriaList
-            if let criteriaList = json["criteriaList"] as? [[String: Any]] {
+            if let criteriaList = json["criterias"] as? [[String: Any]] {
                 // Iterate over the criteria
                 for criteria in criteriaList {
                     // Perform operations on each criteria
-                    if let searchQuery = criteria["searchQuery"] as? [String: Any], let currentCriteriaId = criteria["criteriaId"] as? Int {
+                    if let searchQuery = criteria["searchQuery"] as? [String: Any], let currentCriteriaId = criteria["criteriaId"] as? String {
                         // we will split purhase/updatecart event items as seperate events because we need to compare it against the single item in criteria json
                         var eventsToProcess = getEventsWithCartItems()
                         eventsToProcess.append(contentsOf: getNonCartEvents())

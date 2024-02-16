@@ -75,27 +75,33 @@ public class AnonymousUserManager: AnonymousUserManagerProtocol {
     // Stores an anonymous sessions locally. Updates the last session time each time when new session is created
     public func updateAnonSession() {
         if var sessions = localStorage.anonymousSessions {
-            sessions.itbl_anon_sessions.number_of_sessions += 1
-            sessions.itbl_anon_sessions.last_session = getUTCDateTime()
+            sessions.itbl_anon_sessions.totalAnonSessionCount += 1
+            sessions.itbl_anon_sessions.lastAnonSession = (Int(self.dateProvider.currentDate.timeIntervalSince1970) * 1000)
             localStorage.anonymousSessions = sessions
         } else {
             // create session object for the first time
-            let initialAnonSessions = IterableAnonSessions(number_of_sessions: 1, last_session: getUTCDateTime(), first_session: getUTCDateTime())
+            let initialAnonSessions = IterableAnonSessions(totalAnonSessionCount: 1, lastAnonSession: (Int(self.dateProvider.currentDate.timeIntervalSince1970) * 1000), firstAnonSession: (Int(self.dateProvider.currentDate.timeIntervalSince1970) * 1000))
             let anonSessionWrapper = IterableAnonSessionsWrapper(itbl_anon_sessions: initialAnonSessions)
             localStorage.anonymousSessions = anonSessionWrapper
         }
     }
     
     // Creates a user after criterias met and login the user and then sync the data through track APIs
-    private func createKnownUserIfCriteriaMatched(criteriaId: Int?) {
+    private func createKnownUserIfCriteriaMatched(criteriaId: String?) {
         if (criteriaId != nil) {
+            var anonSessions = convertToDictionary(data: localStorage.anonymousSessions?.itbl_anon_sessions)
             let userId = IterableUtil.generateUUID()
             IterableAPI.setUserId(userId)
-            var anonSessions = convertToDictionary(data: localStorage.anonymousSessions?.itbl_anon_sessions)
-            anonSessions["anon_criteria_id"] = criteriaId
+            anonSessions["matchedCriteriaId"] = criteriaId
+            var appName = ""
             notificationStateProvider.isNotificationsEnabled { isEnabled in
-                anonSessions["pushOptIn"] = isEnabled
-                IterableAPI.track(event: "itbl_anon_sessions", dataFields: anonSessions)
+                if (isEnabled) {
+                    appName = Bundle.main.appPackageName ?? ""
+                }
+                if (!appName.isEmpty) {
+                    anonSessions["mobilePushOptIn"] = appName
+                }
+                IterableAPI.implementation?.apiClient.trackAnonSession(createdAt: (Int(self.dateProvider.currentDate.timeIntervalSince1970) * 1000), requestJson: anonSessions)
                 self.syncEvents()
             }
         }
@@ -174,7 +180,7 @@ public class AnonymousUserManager: AnonymousUserManagerProtocol {
     }
     
     // Checks if criterias are being met and returns criteriaId if it matches the criteria.
-    private func evaluateCriteriaAndReturnID() -> Int? {
+    private func evaluateCriteriaAndReturnID() -> String? {
         guard let events = localStorage.anonymousUserEvents, let criteriaData = localStorage.criteriaData  else {
             return nil
         }
@@ -183,19 +189,9 @@ public class AnonymousUserManager: AnonymousUserManagerProtocol {
     }
     // Gets the anonymous criteria
     public func getAnonCriteria() {
-        // call API when it is available and save data in userdefaults, until then just save the data in userdefaults using static data from anoncriteria_response.json
-        if let path = Bundle.module.path(forResource: "anoncriteria_response", ofType: "json") {
-            let fileURL = URL(fileURLWithPath: path)
-            do {
-                let data = try Data(contentsOf: fileURL)
-                // Process your data here
-                localStorage.criteriaData = data
-            } catch {
-                print("Error reading file: \(error)")
-            }
-        } else {
-            print("File not found in the package")
-        }
+        IterableAPI.implementation?.getCriteriaData { returnedData in
+            self.localStorage.criteriaData = returnedData
+        };
     }
     
     // Stores event data locally

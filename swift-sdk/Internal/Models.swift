@@ -23,9 +23,9 @@ struct CriteriaItem: Codable {
 }
 
 struct IterableAnonSessions: Codable {
-    var number_of_sessions: Int
-    var last_session: String
-    var first_session: String
+    var totalAnonSessionCount: Int
+    var lastAnonSession: Int
+    var firstAnonSession: Int
 }
 
 struct IterableAnonSessionsWrapper: Codable {

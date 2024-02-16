@@ -293,4 +293,14 @@ extension ApiClient: ApiClientProtocol {
         let result = createRequestCreator().flatMap { $0.createMergeUserRequest(sourceEmail, sourceUserId, destinationEmail, destinationUserId: destinationUserId) }
         return send(iterableRequestResult: result)
     }
+    
+    func getCriteria()  -> Pending<SendRequestValue, SendRequestError> {
+        let result = createRequestCreator().flatMap { $0.createGetCriteriaRequest() }
+        return send(iterableRequestResult: result)
+    }
+        
+    func trackAnonSession(createdAt: Int, requestJson: [AnyHashable: Any])  -> Pending<SendRequestValue, SendRequestError> {
+        let result = createRequestCreator().flatMap { $0.createTrackAnonSessionRequest(createdAt: createdAt, requestJson: requestJson) }
+        return send(iterableRequestResult: result)
+    }
 }
