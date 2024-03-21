@@ -354,6 +354,7 @@ class IterableAPITests: XCTestCase {
         let internalAPI = InternalIterableAPI.initializeForTesting(apiKey: IterableAPITests.apiKey, networkSession: networkSession)
         internalAPI.email = IterableAPITests.email
         internalAPI.updateEmail(newEmail,
+                                merge: true,
                                 onSuccess: { _ in
                                     guard let request = networkSession.getRequest(withEndPoint: Const.Path.updateEmail) else {
                                         return
@@ -392,6 +393,7 @@ class IterableAPITests: XCTestCase {
         let internalAPI = InternalIterableAPI.initializeForTesting(apiKey: IterableAPITests.apiKey, networkSession: networkSession)
         internalAPI.userId = currentUserId
         internalAPI.updateEmail(newEmail,
+                                merge: true,
                                 onSuccess: { _ in
                                     guard let request = networkSession.getRequest(withEndPoint: Const.Path.updateEmail) else {
                                         return
@@ -421,7 +423,85 @@ class IterableAPITests: XCTestCase {
         
         wait(for: [expectation], timeout: testExpectationTimeout)
     }
-    
+
+    func testUpdateEmailWithEmailWithoutMerge() {
+        let expectation = XCTestExpectation(description: "testUpdateEmailWIthEmail")
+
+        let newEmail = "new_user@example.com"
+        let networkSession = MockNetworkSession(statusCode: 200)
+        let internalAPI = InternalIterableAPI.initializeForTesting(apiKey: IterableAPITests.apiKey, networkSession: networkSession)
+        internalAPI.email = IterableAPITests.email
+        internalAPI.updateEmail(newEmail,
+                                merge: nil,
+                                onSuccess: { _ in
+                                    guard let request = networkSession.getRequest(withEndPoint: Const.Path.updateEmail) else {
+                                        return
+                                    }
+                                    guard let body = TestUtils.getRequestBody(request: request) else {
+                                        return
+                                    }
+                                    TestUtils.validate(request: request,
+                                                       requestType: .post,
+                                                       apiEndPoint: Endpoint.api,
+                                                       path: Const.Path.updateEmail,
+                                                       queryParams: [])
+                                    TestUtils.validateElementPresent(withName: JsonKey.newEmail, andValue: newEmail, inDictionary: body)
+                                    TestUtils.validateElementPresent(withName: JsonKey.currentEmail, andValue: IterableAPITests.email, inDictionary: body)
+                                    XCTAssertEqual(internalAPI.email, newEmail)
+                                    expectation.fulfill()
+                                },
+                                onFailure: { reason, _ in
+                                    expectation.fulfill()
+                                    if let reason = reason {
+                                        XCTFail("encountered error: \(reason)")
+                                    } else {
+                                        XCTFail("encountered error")
+                                    }
+        })
+
+        wait(for: [expectation], timeout: testExpectationTimeout)
+    }
+
+    func testUpdateEmailWithUserIdWithoutMerge() {
+        let expectation = XCTestExpectation(description: "testUpdateEmailWithUserId")
+
+        let currentUserId = IterableUtil.generateUUID()
+        let newEmail = "new_user@example.com"
+        let networkSession = MockNetworkSession(statusCode: 200)
+        let internalAPI = InternalIterableAPI.initializeForTesting(apiKey: IterableAPITests.apiKey, networkSession: networkSession)
+        internalAPI.userId = currentUserId
+        internalAPI.updateEmail(newEmail,
+                                merge: nil,
+                                onSuccess: { _ in
+                                    guard let request = networkSession.getRequest(withEndPoint: Const.Path.updateEmail) else {
+                                        return
+                                    }
+                                    guard let body = TestUtils.getRequestBody(request: request) else {
+                                        return
+                                    }
+                                    TestUtils.validate(request: request,
+                                                       requestType: .post,
+                                                       apiEndPoint: Endpoint.api,
+                                                       path: Const.Path.updateEmail,
+                                                       queryParams: [])
+                                    TestUtils.validateElementPresent(withName: JsonKey.newEmail, andValue: newEmail, inDictionary: body)
+                                    TestUtils.validateElementPresent(withName: JsonKey.currentUserId, andValue: currentUserId, inDictionary: body)
+                                    XCTAssertEqual(internalAPI.userId, currentUserId)
+                                    XCTAssertNil(internalAPI.email)
+                                    expectation.fulfill()
+                                },
+                                onFailure: { reason, _ in
+                                    expectation.fulfill()
+                                    if let reason = reason {
+                                        XCTFail("encountered error: \(reason)")
+                                    } else {
+                                        XCTFail("encountered error")
+                                    }
+        })
+
+        wait(for: [expectation], timeout: testExpectationTimeout)
+    }
+
     func testRegisterTokenNilAppName() {
         let expectation = XCTestExpectation(description: "testRegisterToken")
         
