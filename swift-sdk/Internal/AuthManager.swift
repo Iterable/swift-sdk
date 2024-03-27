@@ -142,7 +142,11 @@ class AuthManager: IterableAuthManagerProtocol {
         ITBInfo()
         
         expirationRefreshTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] _ in
-            self?.requestNewAuthToken(hasFailedPriorAuth: false)
+            if(self?.localStorage.email != nil && self?.localStorage.userId != nil) {
+                self?.requestNewAuthToken(hasFailedPriorAuth: false)
+            } else {
+                ITBDebug("Email or userId is not available. Skipping token refresh")
+            }
         }
     }
     
