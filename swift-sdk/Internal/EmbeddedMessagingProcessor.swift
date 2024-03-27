@@ -13,6 +13,18 @@ struct EmbeddedMessagingProcessor {
     func processedMessagesList() -> [Int: [IterableEmbeddedMessage]] {
         return fetchedMessages
     }
+    
+    func processedMessageIdList() -> [String] {
+        var fetchedMessageIds: [String] = []
+        
+        for (_, messages) in fetchedMessages {
+            for message in messages {
+                fetchedMessageIds.append(message.metadata.messageId)
+            }
+        }
+        
+        return fetchedMessageIds
+    }
 
     func newlyRetrievedMessages() -> [Int: [IterableEmbeddedMessage]] {
         var newMessages: [Int: [IterableEmbeddedMessage]] = [:]

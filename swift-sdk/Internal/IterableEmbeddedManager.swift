@@ -130,6 +130,7 @@ class IterableEmbeddedManager: NSObject, IterableInternalEmbeddedManagerProtocol
     private let urlOpener: UrlOpenerProtocol
     private let allowedProtocols: [String]
     private var messages: [Int: [IterableEmbeddedMessage]] = [:]
+    private var messageIds: [String] = []
     private var listeners: NSHashTable<IterableEmbeddedUpdateDelegate> = NSHashTable(options: [.weakMemory])
     private var trackedMessageIds: Set<String> = Set()
     private var enableEmbeddedMessaging: Bool
@@ -153,7 +154,8 @@ class IterableEmbeddedManager: NSObject, IterableInternalEmbeddedManagerProtocol
     }
     
     private func retrieveEmbeddedMessages(completion: @escaping () -> Void) {
-        apiClient.getEmbeddedMessages()
+        
+        apiClient.getEmbeddedMessages(currentMessageIds: messageIds)
             .onCompletion(
                 receiveValue: { embeddedMessagesPayload in
                     let placements = embeddedMessagesPayload.placements
@@ -167,6 +169,7 @@ class IterableEmbeddedManager: NSObject, IterableInternalEmbeddedManagerProtocol
                                                                fetchedMessages: fetchedMessagesDict)
                     
                     self.setMessages(processor)
+                    self.setMessageIds(processor)
                     self.trackNewlyRetrieved(processor)
                     self.notifyUpdateDelegates(processor)
                     completion()
@@ -189,6 +192,10 @@ class IterableEmbeddedManager: NSObject, IterableInternalEmbeddedManagerProtocol
     private func setMessages(_ processor: EmbeddedMessagingProcessor) {
         messages = processor.processedMessagesList()
         cleanUpTrackedMessageIds(messages)
+    }
+    
+    private func setMessageIds(_ processor: EmbeddedMessagingProcessor) {
+        messageIds = processor.processedMessageIdList()
     }
     
     private func cleanUpTrackedMessageIds(_ currentMessages: [Int: [IterableEmbeddedMessage]]) {
