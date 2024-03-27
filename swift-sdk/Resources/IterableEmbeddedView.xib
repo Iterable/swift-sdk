@@ -62,7 +62,7 @@ Description text</string>
                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="jZp-8m-qQK" secondAttribute="trailing" constant="139.66666666666669" id="XHy-qF-kvs"/>
                                     </constraints>
                                 </stackView>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k84-x3-9VM">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k84-x3-9VM">
                                     <rect key="frame" x="268" y="0.0" width="100" height="100"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="8cm-im-EKi"/>
