@@ -8,6 +8,15 @@ import Foundation
 
 class BlankApiClient: ApiClientProtocol {
     
+    func trackAnonSession(createdAt: Int, withUserId userId: String, requestJson: [AnyHashable : Any]) -> IterableSDK.Pending<IterableSDK.SendRequestValue, IterableSDK.SendRequestError> {
+        Pending()
+    }
+    
+    func getCriteria() -> IterableSDK.Pending<IterableSDK.SendRequestValue, IterableSDK.SendRequestError> {
+        Pending()
+    }
+    
+    
     func track(event eventName: String, dataFields: [AnyHashable : Any]?) -> IterableSDK.Pending<IterableSDK.SendRequestValue, IterableSDK.SendRequestError> {
         Pending()
     }

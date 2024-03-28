@@ -169,7 +169,7 @@ class AnonymousUserCriteriaMatchTests: XCTestCase {
             "dataType": "purchase",
             "dataFields": ["campaignId": 1234]
         ], ["dataType": "customEvent", "eventName": "processing_cancelled"]]
-        let expectedCriteriaId = 12345
+        let expectedCriteriaId = "12345"
         let matchedCriteriaId = CriteriaCompletionChecker(anonymousCriteria: data(from: mockDataWithAnd)!, anonymousEvents: eventItems).getMatchedCriteria()
         XCTAssertEqual(matchedCriteriaId, expectedCriteriaId)
     }
@@ -193,7 +193,7 @@ class AnonymousUserCriteriaMatchTests: XCTestCase {
             "createdAt": 1699246745093,
             "dataType": "purchase"
         ]]
-        let expectedCriteriaId = 12345
+        let expectedCriteriaId = "12345"
         let matchedCriteriaId = CriteriaCompletionChecker(anonymousCriteria: data(from: mockDataWithOr)!, anonymousEvents: eventItems).getMatchedCriteria()
         XCTAssertEqual(matchedCriteriaId, expectedCriteriaId)
     }

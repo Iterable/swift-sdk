@@ -396,6 +396,14 @@
 		ACFF42A924656DA500FDF10D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACFF42A824656D8E00FDF10D /* Assets.xcassets */; };
 		ACFF42AC24656DD100FDF10D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACFF42AA24656DC800FDF10D /* LaunchScreen.storyboard */; };
 		ACFF42B02465B4AE00FDF10D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFF42AF2465B4AE00FDF10D /* AppDelegate.swift */; };
+		E91489B12BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */; };
+		E91489B22BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */; };
+		E91489B32BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */; };
+		E91489B42BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */; };
+		E91489B52BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */; };
+		E91489B62BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */; };
+		E91489B72BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */; };
+		E91489BC2BB2FEF4003DF4D8 /* AnonymousUserManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91489B82BB2FEF4003DF4D8 /* AnonymousUserManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -801,6 +809,8 @@
 		ACFF42AD24656E7800FDF10D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACFF42AE24656ECF00FDF10D /* ui-tests-app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ui-tests-app.entitlements"; sourceTree = "<group>"; };
 		ACFF42AF2465B4AE00FDF10D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnonymousUserManager.swift; sourceTree = "<group>"; };
+		E91489B82BB2FEF4003DF4D8 /* AnonymousUserManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousUserManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -924,6 +934,7 @@
 				373268052B4D52DA00CC82C9 /* AnonymousUserMergeTests.swift */,
 				379C34A82B3F021B0077E631 /* AnonymousUserCriteriaMatchTests.swift */,
 				379C34A92B3F021B0077E631 /* AnonymousUserMergeTests.swift */,
+				E91489B82BB2FEF4003DF4D8 /* AnonymousUserManagerTests.swift */,
 			);
 			name = "anonymous-user-tests";
 			sourceTree = "<group>";
@@ -1433,6 +1444,7 @@
 				5588DF8D28C044DE000697D7 /* MockUrlOpener.swift */,
 				5588DFD528C04683000697D7 /* MockWebView.swift */,
 				9FF05EAB2AFEA5FA005311F7 /* MockAuthManager.swift */,
+				E91489B02BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -2181,6 +2193,7 @@
 				5588DF7328C0442D000697D7 /* MockDateProvider.swift in Sources */,
 				5588DFF328C046FF000697D7 /* MockMessageViewControllerEventTracker.swift in Sources */,
 				AC28480A24AA44C600C1FC7F /* EndpointTests.swift in Sources */,
+				E91489B62BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */,
 				5588DFEB28C046D7000697D7 /* MockInboxState.swift in Sources */,
 				ACA2A91724AB25D3001DFD17 /* CommonExtensions.swift in Sources */,
 				ACD2B85925B18058005D7A90 /* E2EDependencyContainer.swift in Sources */,
@@ -2244,6 +2257,7 @@
 				55CC257B2462064F00A77FD5 /* InAppPresenterTests.swift in Sources */,
 				AC4BA00224163D8F007359F1 /* IterableHtmlMessageViewControllerTests.swift in Sources */,
 				55B37FC822975A840042F13A /* InboxMessageViewModelTests.swift in Sources */,
+				E91489B42BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */,
 				55E6F462238E066400808BCE /* DeepLinkTests.swift in Sources */,
 				55B37FC1229620D20042F13A /* CommerceItemTests.swift in Sources */,
 				5588DFC128C0460E000697D7 /* MockNotificationCenter.swift in Sources */,
@@ -2274,6 +2288,7 @@
 				AC3A2FF0262EDD4C00425435 /* InAppPriorityTests.swift in Sources */,
 				ACD6116E21080564003E7F6B /* IterableAPITests.swift in Sources */,
 				5588DF8928C044BE000697D7 /* MockCustomActionDelegate.swift in Sources */,
+				E91489BC2BB2FEF4003DF4D8 /* AnonymousUserManagerTests.swift in Sources */,
 				AC02CAA6234E50B5006617E0 /* RegistrationTests.swift in Sources */,
 				5588DFA128C04570000697D7 /* MockApplicationStateProvider.swift in Sources */,
 				5588DFF128C046FF000697D7 /* MockMessageViewControllerEventTracker.swift in Sources */,
@@ -2341,6 +2356,7 @@
 				AC738CE82315A5B600B96B2D /* CommonExtensions.swift in Sources */,
 				5588DF8828C044BE000697D7 /* MockCustomActionDelegate.swift in Sources */,
 				5588DF8028C04494000697D7 /* MockUrlDelegate.swift in Sources */,
+				E91489B32BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */,
 				55B06F3729D5102800C3B1BC /* BlankApiClient.swift in Sources */,
 				AC738CE72315A54100B96B2D /* CommonMocks.swift in Sources */,
 				5588DFE028C046B7000697D7 /* MockLocalStorage.swift in Sources */,
@@ -2359,6 +2375,7 @@
 				5588DF7228C0442D000697D7 /* MockDateProvider.swift in Sources */,
 				5588DFF228C046FF000697D7 /* MockMessageViewControllerEventTracker.swift in Sources */,
 				ACBDDE5C23C4EDEC0008CC4D /* InboxCustomizationTests.swift in Sources */,
+				E91489B52BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */,
 				5588DFEA28C046D7000697D7 /* MockInboxState.swift in Sources */,
 				ACC6A852232407B5003CC4BE /* InboxUITestsHelper.swift in Sources */,
 				5B49BB3E27CFB71500E6F00C /* PopupInboxSessionUITests.swift in Sources */,
@@ -2413,6 +2430,7 @@
 				9FF05EAC2AFEA5FA005311F7 /* MockAuthManager.swift in Sources */,
 				5588DFB628C045E3000697D7 /* MockInAppDelegate.swift in Sources */,
 				5588DF8628C044BE000697D7 /* MockCustomActionDelegate.swift in Sources */,
+				E91489B12BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */,
 				AC995F992166EE490099A184 /* CommonMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2443,6 +2461,7 @@
 				5588DFCC28C04642000697D7 /* MockInAppPersister.swift in Sources */,
 				ACCF274C24F40C85004862D5 /* RequestHandlerTests.swift in Sources */,
 				5588DF9C28C04519000697D7 /* MockPushTracker.swift in Sources */,
+				E91489B72BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */,
 				ACC362C724D2C647002C67BA /* CommonMocks.swift in Sources */,
 				ACC362C824D2C7C9002C67BA /* TestUtils.swift in Sources */,
 				AC241C2224F5757C00F8F9CC /* Mocks.swift in Sources */,
@@ -2480,6 +2499,7 @@
 				ACFF429024656BDF00FDF10D /* Common.swift in Sources */,
 				5588DFBF28C0460E000697D7 /* MockNotificationCenter.swift in Sources */,
 				5588DFCF28C0465E000697D7 /* MockAPNSTypeChecker.swift in Sources */,
+				E91489B22BB2E6C1003DF4D8 /* MockAnonymousUserManager.swift in Sources */,
 				5588DF9728C04519000697D7 /* MockPushTracker.swift in Sources */,
 				ACFF429124656BDF00FDF10D /* CommonMocks.swift in Sources */,
 				5588DFC728C04642000697D7 /* MockInAppPersister.swift in Sources */,

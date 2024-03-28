@@ -499,12 +499,12 @@ struct RequestCreator {
     }
     
     func createGetUserByUserIdRequest(_ userId: String) -> Result<IterableRequest, IterableError> {
-        var body: [AnyHashable: Any] = [JsonKey.userId: userId]
+        let body: [AnyHashable: Any] = [JsonKey.userId: userId]
         return .success(.get(createGetRequest(forPath: Const.Path.userByUserId, withArgs: body as! [String: String])))
     }
     
     func createGetUserByEmailRequest(_ email: String) -> Result<IterableRequest, IterableError> {
-        var body: [AnyHashable: Any] = [JsonKey.email: email]
+        let body: [AnyHashable: Any] = [JsonKey.email: email]
         return .success(.get(createGetRequest(forPath: Const.Path.userByEmail, withArgs: body as! [String: String])))
     }
     
@@ -534,15 +534,16 @@ struct RequestCreator {
         return .success(.get(createGetRequest(forPath: Const.Path.getCriteria, withArgs: body as! [String: String])))
     }
 
-    func createTrackAnonSessionRequest(createdAt: Int, requestJson: [AnyHashable: Any]) -> Result<IterableRequest, IterableError> {
-        if case .none = auth.emailOrUserId {
-            ITBError(Self.authMissingMessage)
-            return .failure(IterableError.general(description: Self.authMissingMessage))
-        }
-        
+    func createTrackAnonSessionRequest(createdAt: Int, withUserId userId: String, requestJson: [AnyHashable: Any]) -> Result<IterableRequest, IterableError> {
         var body = [AnyHashable: Any]()
         
-        setCurrentUser(inDict: &body)
+        var userDict = [AnyHashable: Any]()
+        userDict[JsonKey.userId] = userId
+        userDict[JsonKey.preferUserId] = true
+        userDict[JsonKey.mergeNestedObjects] = true
+        userDict[JsonKey.createNewFields] = true
+
+        body.setValue(for: JsonKey.Commerce.user, value: userDict)
         body.setValue(for: JsonKey.Body.createdAt, value: createdAt)
         body.setValue(for: JsonKey.deviceInfo, value: deviceMetadata.asDictionary())
         body.setValue(for: JsonKey.anonSessionContext, value: requestJson)

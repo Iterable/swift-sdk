@@ -91,8 +91,7 @@ public class AnonymousUserManager: AnonymousUserManagerProtocol {
         if (criteriaId != nil) {
             var anonSessions = convertToDictionary(data: localStorage.anonymousSessions?.itbl_anon_sessions)
             let userId = IterableUtil.generateUUID()
-            IterableAPI.setUserId(userId)
-            anonSessions["matchedCriteriaId"] = criteriaId
+            anonSessions["matchedCriteriaId"] = Int(criteriaId ?? "0")
             var appName = ""
             notificationStateProvider.isNotificationsEnabled { isEnabled in
                 if (isEnabled) {
@@ -101,8 +100,14 @@ public class AnonymousUserManager: AnonymousUserManagerProtocol {
                 if (!appName.isEmpty) {
                     anonSessions["mobilePushOptIn"] = appName
                 }
-                IterableAPI.implementation?.apiClient.trackAnonSession(createdAt: (Int(self.dateProvider.currentDate.timeIntervalSince1970) * 1000), requestJson: anonSessions)
-                self.syncEvents()
+                IterableAPI.implementation?.apiClient.trackAnonSession(createdAt: (Int(self.dateProvider.currentDate.timeIntervalSince1970) * 1000), withUserId: userId, requestJson: anonSessions).onError { error in
+                    if (error.httpStatusCode == 409) {
+                        self.getAnonCriteria() // refetch the criteria
+                    }
+                }.onSuccess { success in
+                    IterableAPI.setUserId(userId)
+                    self.syncEvents()
+                }
             }
         }
     }

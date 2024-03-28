@@ -299,8 +299,8 @@ extension ApiClient: ApiClientProtocol {
         return send(iterableRequestResult: result)
     }
         
-    func trackAnonSession(createdAt: Int, requestJson: [AnyHashable: Any])  -> Pending<SendRequestValue, SendRequestError> {
-        let result = createRequestCreator().flatMap { $0.createTrackAnonSessionRequest(createdAt: createdAt, requestJson: requestJson) }
+    func trackAnonSession(createdAt: Int, withUserId userId: String, requestJson: [AnyHashable: Any])  -> Pending<SendRequestValue, SendRequestError> {
+        let result = createRequestCreator().flatMap { $0.createTrackAnonSessionRequest(createdAt: createdAt, withUserId: userId, requestJson: requestJson) }
         return send(iterableRequestResult: result)
     }
 }
