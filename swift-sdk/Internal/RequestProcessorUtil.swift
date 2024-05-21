@@ -18,6 +18,7 @@ struct RequestProcessorUtil {
         .onError { error in
             if error.httpStatusCode == 401, error.iterableCode == JsonValue.Code.invalidJwtPayload {
                 ITBError("invalid JWT token, trying again: \(error.reason ?? "")")
+                authManager?.handleAuthFailure(failedAuthToken: authManager?.getAuthToken(), reason: getMappedErrorCodeForMessage(error.reason ?? ""))
                 authManager?.requestNewAuthToken(hasFailedPriorAuth: false) { _ in
                     requestProvider().onSuccess { json in
                         reportSuccess(result: result, value: json, successHandler: onSuccess, identifier: identifier)
@@ -51,6 +52,7 @@ struct RequestProcessorUtil {
         }.onError { error in
             if error.httpStatusCode == 401, error.iterableCode == JsonValue.Code.invalidJwtPayload {
                 ITBError(error.reason)
+                authManager?.handleAuthFailure(failedAuthToken: authManager?.getAuthToken(), reason: getMappedErrorCodeForMessage(error.reason ?? ""))
                 authManager?.requestNewAuthToken(hasFailedPriorAuth: true, onSuccess: nil)
             } else if error.httpStatusCode == 401, error.iterableCode == JsonValue.Code.badApiKey {
                 ITBError(error.reason)
@@ -75,6 +77,30 @@ struct RequestProcessorUtil {
             Self.defaultOnSuccess(identifier)(value)
         }
         result.resolve(with: value)
+    }
+    
+    private static func getMappedErrorCodeForMessage(_ reason: String) -> AuthFailureReason {
+        
+        switch reason.lowercased() {
+            case "exp must be less than 1 year from iat":
+                return .authTokenExpirationInvalid
+            case "jwt format is invalid":
+                return .authTokenFormatInvalid
+            case "jwt token is expired":
+                return .authTokenExpired
+            case "jwt is invalid":
+                return .authTokenSignatureInvalid
+            case "jwt payload requires a value for userid or email", "email could not be found":
+                return .authTokenUserKeyInvalid
+            case "jwt token has been invalidated":
+                return .authTokenInvalidated
+            case "invalid payload":
+                return .authTokenPayloadInvalid
+            case "jwt authorization header is not set":
+                return .authTokenMissing
+            default:
+            return .authTokenInvalid
+        }
     }
 
     private static func reportFailure(result: Fulfill<SendRequestValue, SendRequestError>,

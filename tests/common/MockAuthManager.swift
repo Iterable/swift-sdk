@@ -9,6 +9,11 @@ import Foundation
 @testable import IterableSDK
 
 class MockAuthManager: IterableAuthManagerProtocol {
+    
+    func handleAuthFailure(failedAuthToken: String?, reason: IterableSDK.AuthFailureReason) {
+        
+    }
+    
     var shouldRetry = true
     var retryWasRequested = false
 

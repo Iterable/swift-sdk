@@ -74,9 +74,7 @@ open class IterableInboxNavigationViewController: UINavigationController {
     /// This does not have any effect below iOS 11.
     @IBInspectable public var largeTitles: Bool = false {
         didSet {
-            if #available(iOS 11.0, *) {
-                navigationBar.prefersLargeTitles = largeTitles
-            }
+            navigationBar.prefersLargeTitles = largeTitles
         }
     }
     

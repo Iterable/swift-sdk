@@ -17,7 +17,6 @@ protocol NetworkMonitorProtocol {
     var statusUpdatedCallback: (() -> Void)? { get set }
 }
 
-@available(iOS 12.0, *)
 class NetworkMonitor: NetworkMonitorProtocol {
     init() {
         ITBInfo()
@@ -50,38 +49,4 @@ class NetworkMonitor: NetworkMonitorProtocol {
     
     private weak var networkMonitor: NWPathMonitor?
     private let queue = DispatchQueue(label: "NetworkMonitor")
-}
-
-/// This is used for pre-iOS 12.0 because `NWPathMonitor` is not available.
-class PollingNetworkMonitor: NetworkMonitorProtocol {
-    init(pollingInterval: TimeInterval? = nil) {
-        ITBInfo()
-        self.pollingInterval = pollingInterval ?? Self.defaultPollingInterval
-    }
-    
-    deinit {
-        ITBInfo()
-    }
-    
-    var statusUpdatedCallback: (() -> Void)?
-
-    func start() {
-        ITBInfo()
-        timer = DispatchSource.makeTimerSource()
-        timer?.setEventHandler(handler: {[weak self] in
-            self?.statusUpdatedCallback?()
-        })
-        timer?.schedule(deadline: .now() + pollingInterval, repeating: pollingInterval)
-        timer?.activate()
-    }
-    
-    func stop() {
-        ITBInfo()
-        timer?.cancel()
-    }
-    
-    private var pollingInterval: TimeInterval
-    private static let defaultPollingInterval: TimeInterval = 5 * 60
-    
-    private var timer: DispatchSourceTimer?
 }

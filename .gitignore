@@ -18,3 +18,12 @@ build2/
 # needed integration testing
 env_vars.sh
 CI.swift
+*.swiftmodule
+*.timestamp
+*.modulemap
+*.pcm
+.build/arm64-apple-macosx/debug/IterableSDK.build/DerivedSources/resource_bundle_accessor.swift
+.build/arm64-apple-macosx/debug/index/db/v13/p25195--4de704/lock.mdb
+.build/arm64-apple-macosx/debug/index/db/v13/p25195--4de704/data.mdb
+.build/workspace-state.json
+*.mdb

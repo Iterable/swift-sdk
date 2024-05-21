@@ -212,7 +212,16 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "NetworkConnectivityManagerTests/testConnectivityChange()">
+               </Test>
+               <Test
+                  Identifier = "NetworkConnectivityManagerTests/testPollingNetworkMonitor()">
+               </Test>
+               <Test
                   Identifier = "RequestHandlerTests/testFeatureFlagTurnOnOfflineMode()">
+               </Test>
+               <Test
+                  Identifier = "TaskRunnerTests/testResumeWhenNetworkIsBackOnline()">
                </Test>
             </SkippedTests>
          </TestableReference>

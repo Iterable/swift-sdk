@@ -150,7 +150,7 @@ class TaskRunnerTests: XCTestCase {
     func testDoNotRunWhenNetworkIsOffline() throws {
         let networkSession = MockNetworkSession(statusCode: 401, data: nil, error: IterableError.general(description: "Mock error"))
         let checker = NetworkConnectivityChecker(networkSession: networkSession)
-        let monitor = PollingNetworkMonitor(pollingInterval: 0.2)
+        let monitor = NetworkMonitor()
         let notificationCenter = MockNotificationCenter()
         let manager = NetworkConnectivityManager(networkMonitor: monitor,
                                                  connectivityChecker: checker,
@@ -185,7 +185,8 @@ class TaskRunnerTests: XCTestCase {
     func testResumeWhenNetworkIsBackOnline() throws {
         let networkSession = MockNetworkSession(statusCode: 401, json: [:], error: IterableError.general(description: "Mock error"))
         let checker = NetworkConnectivityChecker(networkSession: networkSession)
-        let monitor = PollingNetworkMonitor(pollingInterval: 0.2)
+        let monitor = NetworkMonitor()
+        monitor.start()
         let notificationCenter = MockNotificationCenter()
         let manager = NetworkConnectivityManager(networkMonitor: monitor,
                                                  connectivityChecker: checker,
@@ -227,7 +228,7 @@ class TaskRunnerTests: XCTestCase {
     func testForegroundBackgroundChange() throws {
         let networkSession = MockNetworkSession()
         let checker = NetworkConnectivityChecker(networkSession: networkSession)
-        let monitor = PollingNetworkMonitor(pollingInterval: 0.5)
+        let monitor = NetworkMonitor()
         let notificationCenter = MockNotificationCenter()
         let manager = NetworkConnectivityManager(networkMonitor: monitor,
                                                  connectivityChecker: checker,

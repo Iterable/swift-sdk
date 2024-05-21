@@ -51,6 +51,17 @@ import UIKit
     static func secondsFromEpoch(for date: Date) -> Int {
         Int(date.timeIntervalSince1970)
     }
+    
+    static func getEmailOrUserId() -> String? {
+        let email = IterableAPI.email
+        let userId = IterableAPI.userId
+        if email != nil {
+            return email
+        } else if userId != nil {
+            return userId
+        }
+        return nil
+    }
 
     // given "var1", "val1", "var2", "val2" as input
     // this will return "var1: val1, var2: val2"

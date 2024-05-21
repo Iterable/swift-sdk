@@ -10,4 +10,5 @@ import Foundation
     func requestNewAuthToken(hasFailedPriorAuth: Bool, onSuccess: ((String?) -> Void)?)
     func setNewToken(_ newToken: String)
     func logoutUser()
+    func handleAuthFailure(failedAuthToken: String?, reason: AuthFailureReason)
 }

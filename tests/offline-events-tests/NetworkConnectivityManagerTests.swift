@@ -50,7 +50,7 @@ class NetworkConnectivityManagerTests: XCTestCase {
     func testPollingNetworkMonitor() throws {
         let expectation1 = expectation(description: "do not fulfill before start")
         expectation1.isInverted = true
-        let monitor = PollingNetworkMonitor(pollingInterval: 0.2)
+        let monitor = NetworkMonitor()
         monitor.statusUpdatedCallback = {
             expectation1.fulfill()
         }
@@ -85,7 +85,7 @@ class NetworkConnectivityManagerTests: XCTestCase {
     func testConnectivityChange() throws {
         let networkSession = MockNetworkSession()
         let checker = NetworkConnectivityChecker(networkSession: networkSession)
-        let monitor = PollingNetworkMonitor(pollingInterval: 0.5)
+        let monitor = NetworkMonitor()
         let notificationCenter = MockNotificationCenter()
         let manager = NetworkConnectivityManager(networkMonitor: monitor,
                                                  connectivityChecker: checker,

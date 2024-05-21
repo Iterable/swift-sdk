@@ -95,11 +95,7 @@ struct InAppCalculations {
     }
 
     static func safeAreaInsets(for view: UIView) -> UIEdgeInsets {
-        if #available(iOS 11, *) {
             return view.safeAreaInsets
-        } else {
-            return .zero
-        }
     }
     
     static func calculateWebViewPosition(safeAreaInsets: UIEdgeInsets,

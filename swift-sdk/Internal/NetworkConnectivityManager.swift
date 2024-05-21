@@ -93,11 +93,7 @@ class NetworkConnectivityManager: NSObject {
     }
 
     private static func createNetworkMonitor() -> NetworkMonitorProtocol {
-        if #available(iOS 12, *) {
-            return NetworkMonitor()
-        } else {
-            return PollingNetworkMonitor()
-        }
+        return NetworkMonitor()
     }
 
     private let notificationCenter: NotificationCenterProtocol
