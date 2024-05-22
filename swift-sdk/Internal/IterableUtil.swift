@@ -11,7 +11,11 @@ import UIKit
         if let rootViewController = AppExtensionHelper.application?.delegate?.window??.rootViewController {
             return rootViewController
         } else {
-            return AppExtensionHelper.application?.windows.first?.rootViewController
+            if #available(iOS 15.0, *) {
+                return AppExtensionHelper.application?.connectedScenes.compactMap { ($0 as? UIWindowScene)?.keyWindow }.last?.rootViewController
+            } else {
+                return AppExtensionHelper.application?.windows.filter {$0.isKeyWindow}.first?.rootViewController
+            }
         }
     }
     
