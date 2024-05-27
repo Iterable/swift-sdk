@@ -170,8 +170,8 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
         onLogin(authToken)
     }
     
-    func logoutUser() {
-        logoutPreviousUser()
+    func logoutUser(withOnSuccess onSuccess: OnSuccessHandler? = nil, onFailure: OnFailureHandler? = nil) {
+        logoutPreviousUser(withOnSuccess: onSuccess, onFailure: onFailure)
     }
     
     // MARK: - API Request Calls
@@ -550,7 +550,7 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
         IterableUtil.isNotNullOrEmpty(string: _email) || IterableUtil.isNotNullOrEmpty(string: _userId)
     }
     
-    private func logoutPreviousUser() {
+    private func logoutPreviousUser(withOnSuccess onSuccess: OnSuccessHandler? = nil, onFailure: OnFailureHandler? = nil) {
         ITBInfo()
         
         guard isEitherUserIdOrEmailSet() else {
@@ -558,7 +558,7 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
         }
         
         if config.autoPushRegistration {
-            disableDeviceForCurrentUser()
+            disableDeviceForCurrentUser(withOnSuccess: onSuccess, onFailure: onFailure)
         }
         
         _email = nil
