@@ -56,6 +56,7 @@ import Foundation
 @objc public protocol IterableAuthDelegate: AnyObject {
     @objc func onAuthTokenRequested(completion: @escaping AuthTokenRetrievalHandler)
     @objc func onTokenRegistrationFailed(_ reason: String?)
+    @objc func onLogoutPreviousUserFailed(_ reason: String?)
 }
 
 /// Iterable Configuration Object. Use this when initializing the API.
