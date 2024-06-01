@@ -29,23 +29,28 @@ struct ActionRunner {
                         customActionHandler: CustomActionHandler? = nil,
                         urlOpener: UrlOpenerProtocol? = nil,
                         allowedProtocols: [String] = []) -> Bool {
-        let handled = callExternalHandlers(action: action,
-                                           from: context.source,
-                                           urlHandler: urlHandler,
-                                           customActionHandler: customActionHandler)
         
-        if handled {
-            return true
-        } else {
-            if case let .openUrl(url) = detectActionType(fromAction: action),
-               shouldOpenUrl(url: url, from: context.source, withAllowedProtocols: allowedProtocols),
-               let urlOpener = urlOpener {
-                urlOpener.open(url: url)
-                return true
-            } else {
-                return false
-            }
+        guard case let .openUrl(url) = detectActionType(fromAction: action),
+              shouldOpenUrl(url: url, from: context.source, withAllowedProtocols: allowedProtocols) else {
+            return false
         }
+        
+        if case let handled = callExternalHandlers(action: action,
+                                              from: context.source,
+                                              urlHandler: urlHandler,
+                                              customActionHandler: customActionHandler), handled {
+            return true
+        }
+        
+        if case let .openUrl(url) = detectActionType(fromAction: action),
+           let urlOpener = urlOpener {
+            urlOpener.open(url: url)
+            return true
+        }
+        
+        return false
+        
+
     }
     
     // MARK: - Private
