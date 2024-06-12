@@ -103,6 +103,7 @@ enum JsonKey {
     static let currentEmail = "currentEmail"
     static let currentUserId = "currentUserId"
     static let newEmail = "newEmail"
+    static let merge = "merge"
     static let emailListIds = "emailListIds"
     static let unsubscribedChannelIds = "unsubscribedChannelIds"
     static let unsubscribedMessageTypeIds = "unsubscribedMessageTypeIds"

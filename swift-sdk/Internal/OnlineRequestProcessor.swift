@@ -67,9 +67,10 @@ struct OnlineRequestProcessor: RequestProcessorProtocol {
     
     @discardableResult
     func updateEmail(_ newEmail: String,
+                     merge: Bool? = nil,
                      onSuccess: OnSuccessHandler? = nil,
                      onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
-        sendRequest(requestProvider: { apiClient.updateEmail(newEmail: newEmail) },
+        sendRequest(requestProvider: { apiClient.updateEmail(newEmail: newEmail, merge: merge) },
                     successHandler: onSuccess,
                     failureHandler: onFailure,
                     requestIdentifier: "updateEmail")
