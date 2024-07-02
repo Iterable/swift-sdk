@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37088F332B3C38250000B218 /* IterableAppExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 37088F322B3C38250000B218 /* IterableAppExtensions */; };
+		37088F352B3C38250000B218 /* IterableSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 37088F342B3C38250000B218 /* IterableSDK */; };
 		551A5FF1251AB1950004C9A0 /* IterableSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 551A5FF0251AB1950004C9A0 /* IterableSDK */; };
 		551A5FF3251AB19B0004C9A0 /* IterableAppExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 551A5FF2251AB19B0004C9A0 /* IterableAppExtensions */; };
 		AC1BDF5820E304BC000010CA /* CoffeeListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5ECD9E20E304000081E1DA /* CoffeeListTableViewController.swift */; };
@@ -79,6 +81,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551A5FF1251AB1950004C9A0 /* IterableSDK in Frameworks */,
+				37088F352B3C38250000B218 /* IterableSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37088F332B3C38250000B218 /* IterableAppExtensions in Frameworks */,
 				551A5FF3251AB19B0004C9A0 /* IterableAppExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,6 +223,7 @@
 			name = "swift-sample-app";
 			packageProductDependencies = (
 				551A5FF0251AB1950004C9A0 /* IterableSDK */,
+				37088F342B3C38250000B218 /* IterableSDK */,
 			);
 			productName = "swift-sample-app";
 			productReference = ACA3A13520E2F6AF00FEF74F /* swift-sample-app.app */;
@@ -239,6 +244,7 @@
 			name = "swift-sample-app-notification-extension";
 			packageProductDependencies = (
 				551A5FF2251AB19B0004C9A0 /* IterableAppExtensions */,
+				37088F322B3C38250000B218 /* IterableAppExtensions */,
 			);
 			productName = "swift-sample-app-notification-extension";
 			productReference = ACA3A14E20E2F83D00FEF74F /* swift-sample-app-notification-extension.appex */;
@@ -281,6 +287,8 @@
 				Base,
 			);
 			mainGroup = ACA3A12C20E2F6AF00FEF74F;
+			packageReferences = (
+			);
 			productRefGroup = ACA3A13620E2F6AF00FEF74F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -592,6 +600,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		37088F322B3C38250000B218 /* IterableAppExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = IterableAppExtensions;
+		};
+		37088F342B3C38250000B218 /* IterableSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = IterableSDK;
+		};
 		551A5FF0251AB1950004C9A0 /* IterableSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = IterableSDK;

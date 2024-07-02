@@ -10,6 +10,15 @@ enum Endpoint {
     static let api = Endpoint.apiHostName + Const.apiPath
 }
 
+enum EventType {
+    static let customEvent = "customEvent"
+    static let purchase = "purchase"
+    static let updateUser = "user"
+    static let updateCart = "updateCart"
+    static let anonSession = "anonSession"
+    static let tokenRegistration = "tokenRegistration"
+}
+
 enum Const {
     static let apiPath = "/api/"
     
@@ -39,6 +48,9 @@ enum Const {
         static let updateEmail = "users/updateEmail"
         static let updateSubscriptions = "users/updateSubscriptions"
         static let getRemoteConfiguration = "mobile/getRemoteConfiguration"
+        static let mergeUser = "users/merge";
+        static let getCriteria = "anonymoususer/list";
+        static let trackAnonSession = "anonymoususer/events/session";
         static let getEmbeddedMessages = "embedded-messaging/messages"
         static let embeddedMessageReceived = "embedded-messaging/events/received"
         static let embeddedMessageClick = "embedded-messaging/events/click"
@@ -56,7 +68,12 @@ enum Const {
         static let deviceId = "itbl_device_id"
         static let sdkVersion = "itbl_sdk_version"
         static let offlineMode = "itbl_offline_mode"
-        
+        static let anonymousUserEvents = "itbl_anonymous_user_events"
+        static let criteriaData = "itbl_criteria_data"
+        static let anonymousSessions = "itbl_anon_sessions"
+        static let matchedCriteria = "itbl_matched_criteria"
+        static let eventList = "itbl_event_list"
+
         static let attributionInfoExpiration = 24
     }
     
@@ -66,6 +83,7 @@ enum Const {
         enum Key {
             static let email = "itbl_email"
             static let userId = "itbl_userid"
+            static let userIdAnnon = "itbl_userid_annon"
             static let authToken = "itbl_auth_token"
         }
     }
@@ -108,6 +126,11 @@ enum JsonKey {
     static let unsubscribedMessageTypeIds = "unsubscribedMessageTypeIds"
     static let subscribedMessageTypeIds = "subscribedMessageTypeIds"
     static let preferUserId = "preferUserId"
+    
+    static let sourceEmail = "sourceEmail"
+    static let sourceUserId = "sourceUserId"
+    static let destinationEmail = "destinationEmail"
+    static let destinationUserId = "destinationUserId"
     
     static let mergeNestedObjects = "mergeNestedObjects"
     
@@ -165,6 +188,7 @@ enum JsonKey {
     static let actionIdentifier = "actionIdentifier"
     static let userText = "userText"
     static let appAlreadyRunning = "appAlreadyRunning"
+    static let anonSessionContext = "anonSessionContext"
     
     static let html = "html"
     
@@ -174,6 +198,51 @@ enum JsonKey {
     
     static let contentType = "Content-Type"
     
+    // AUT
+    static let createNewFields = "createNewFields"
+    static let eventType = "dataType"
+    static let eventTimeStamp = "eventTimeStamp"
+    static let criterias = "criterias"
+    static let matchedCriteriaId = "matchedCriteriaId"
+    static let mobilePushOptIn = "mobilePushOptIn"
+    
+    enum CriteriaItem {
+        static let searchQuery = "searchQuery"
+        static let criteriaId = "criteriaId"
+        static let searchQueries = "searchQueries"
+        static let combinator = "combinator"
+        static let searchCombo = "searchCombo"
+        static let field = "field"
+        static let comparatorType = "comparatorType"
+        static let fieldType = "fieldType"
+        static let value = "value"
+        static let minMatch = "minMatch"
+
+        enum Combinator {
+            static let and = "And"
+            static let or = "Or"
+            static let not = "Not"
+        }
+        
+        enum CartEventPrefix {
+            static let updateCartItemPrefix = "updateCart.updatedShoppingCartItems."
+            static let purchaseItemPrefix = "shoppingCartItems."
+        }
+        
+        enum Comparator {
+            static let Equals = "Equals"
+            static let DoesNotEquals = "DoesNotEquals"
+            static let IsSet = "IsSet"
+            static let GreaterThan = "GreaterThan"
+            static let LessThan = "LessThan"
+            static let GreaterThanOrEqualTo = "GreaterThanOrEqualTo"
+            static let LessThanOrEqualTo = "LessThanOrEqualTo"
+            static let Contains = "Contains"
+            static let StartsWith = "StartsWith"
+            static let MatchesRegex = "MatchesRegex"
+        }
+    }
+
     
 //    embedded
     static let embeddedSessionId = "session"
@@ -407,6 +476,12 @@ public enum IterableCustomActionName: String, CaseIterable {
     case delete
 }
 
+public enum MergeResult: String {
+    case mergenotrequired
+    case mergesuccessful
+    case mergefailed
+}
+
 public typealias ITEActionBlock = (String?) -> Void
 public typealias ITBURLCallback = (URL?) -> Void
 public typealias OnSuccessHandler = (_ data: [AnyHashable: Any]?) -> Void
@@ -414,3 +489,4 @@ public typealias OnFailureHandler = (_ reason: String?, _ data: Data?) -> Void
 public typealias UrlHandler = (URL) -> Bool
 public typealias CustomActionHandler = (String) -> Bool
 public typealias AuthTokenRetrievalHandler = (String?) -> Void
+public typealias MergeActionHandler = (MergeResult, String?) -> Void

@@ -66,7 +66,7 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
     }
     
     var auth: Auth {
-        Auth(userId: userId, email: email, authToken: authManager.getAuthToken())
+        Auth(userId: userId, email: email, authToken: authManager.getAuthToken(), userIdAnon: localStorage.userIdAnnon)
     }
 
     var dependencyContainer: DependencyContainerProtocol
@@ -80,6 +80,14 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
     
     lazy var authManager: IterableAuthManagerProtocol = {
         self.dependencyContainer.createAuthManager(config: self.config)
+    }()
+    
+    lazy var anonymousUserManager: AnonymousUserManagerProtocol = {
+        self.dependencyContainer.createAnonymousUserManager()
+    }()
+    
+    lazy var anonymousUserMerge: AnonymousUserMergeProtocol = {
+        self.dependencyContainer.createAnonymousUserMerge(apiClient: apiClient as! ApiClient, anonymousUserManager: anonymousUserManager)
     }()
     
     lazy var embeddedManager: IterableInternalEmbeddedManagerProtocol = {
@@ -123,51 +131,69 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
     }
     
     func setEmail(_ email: String?, authToken: String? = nil, successHandler: OnSuccessHandler? = nil, failureHandler: OnFailureHandler? = nil) {
+        
         ITBInfo()
-        
-        if _email == email && email != nil && authToken != nil {
-            checkAndUpdateAuthToken(authToken)
-            return
+
+        anonymousUserMerge.tryMergeUser(sourceUserId: localStorage.userIdAnnon, destinationUserIdOrEmail: email, isEmail: true) { mergeResult, error in
+            if mergeResult == MergeResult.mergenotrequired ||  mergeResult == MergeResult.mergesuccessful {
+                if self._email == email && email != nil && authToken != nil {
+                    self.checkAndUpdateAuthToken(authToken)
+                    return
+                }
+                
+                if self._email == email {
+                    return
+                }
+                
+                self.logoutPreviousUser()
+                self.localStorage.userIdAnnon = nil
+                self._email = email
+                self._userId = nil
+                self.anonymousUserManager.syncNonSyncedEvents()
+                self._successCallback = successHandler
+                self._failureCallback = failureHandler
+                
+                self.storeIdentifierData()
+                
+                self.onLogin(authToken)
+            } else {
+                failureHandler?(error, nil)
+            }
         }
-        
-        if _email == email {
-            return
-        }
-        
-        logoutPreviousUser()
-        
-        _email = email
-        _userId = nil
-        _successCallback = successHandler
-        _failureCallback = failureHandler
-        
-        storeIdentifierData()
-        
-        onLogin(authToken)
     }
     
     func setUserId(_ userId: String?, authToken: String? = nil, successHandler: OnSuccessHandler? = nil, failureHandler: OnFailureHandler? = nil) {
         ITBInfo()
-        
-        if _userId == userId && userId != nil && authToken != nil {
-            checkAndUpdateAuthToken(authToken)
-            return
+
+        anonymousUserMerge.tryMergeUser(sourceUserId: localStorage.userIdAnnon, destinationUserIdOrEmail: userId, isEmail: false) { mergeResult, error in
+            if mergeResult == MergeResult.mergenotrequired ||  mergeResult == MergeResult.mergesuccessful {
+                
+                if self._userId == userId && userId != nil && authToken != nil {
+                    self.checkAndUpdateAuthToken(authToken)
+                    return
+                }
+                
+                if self._userId == userId {
+                    return
+                }
+                
+                self.logoutPreviousUser()
+                self.localStorage.userIdAnnon = nil
+
+                self._email = nil
+                self._userId = userId
+                self.anonymousUserManager.syncNonSyncedEvents()
+                self._successCallback = successHandler
+                self._failureCallback = failureHandler
+                
+                self.storeIdentifierData()
+                
+                self.onLogin(authToken)
+            } else {
+                failureHandler?(error, nil)
+            }
         }
-        
-        if _userId == userId {
-            return
-        }
-        
-        logoutPreviousUser()
-        
-        _email = nil
-        _userId = userId
-        _successCallback = successHandler
-        _failureCallback = failureHandler
-        
-        storeIdentifierData()
-        
-        onLogin(authToken)
+  
     }
     
     func logoutUser() {
@@ -185,6 +211,10 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
             _failureCallback?(errorMessage, nil)
             onFailure?(errorMessage, nil)
             return
+        }
+        
+        if !isEitherUserIdOrEmailSet() && config.enableAnonTracking && localStorage.userIdAnnon == nil {
+            anonymousUserManager.trackAnonTokenRegistration(token: token.hexString())
         }
         
         hexToken = token.hexString()
@@ -241,7 +271,10 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
                     mergeNestedObjects: Bool,
                     onSuccess: OnSuccessHandler? = nil,
                     onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
-        requestHandler.updateUser(dataFields, mergeNestedObjects: mergeNestedObjects, onSuccess: onSuccess, onFailure: onFailure)
+        if !isEitherUserIdOrEmailSet() && config.enableAnonTracking && localStorage.userIdAnnon == nil{
+            anonymousUserManager.trackAnonUpdateUser(dataFields)
+        }
+        return requestHandler.updateUser(dataFields, mergeNestedObjects: mergeNestedObjects, onSuccess: onSuccess, onFailure: onFailure)
     }
     
     @discardableResult
@@ -266,7 +299,18 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
     func updateCart(items: [CommerceItem],
                     onSuccess: OnSuccessHandler? = nil,
                     onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
-        requestHandler.updateCart(items: items, onSuccess: onSuccess, onFailure: onFailure)
+        if !isEitherUserIdOrEmailSet() && config.enableAnonTracking && localStorage.userIdAnnon == nil {
+            anonymousUserManager.trackAnonUpdateCart(items: items)
+        }
+        return requestHandler.updateCart(items: items, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
+    @discardableResult
+    func updateCart(items: [CommerceItem],
+                    createdAt: Int,
+                    onSuccess: OnSuccessHandler? = nil,
+                    onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        return requestHandler.updateCart(items: items, createdAt: createdAt, onSuccess: onSuccess, onFailure: onFailure)
     }
     
     @discardableResult
@@ -277,11 +321,29 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
                        templateId: NSNumber? = nil,
                        onSuccess: OnSuccessHandler? = nil,
                        onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
-        requestHandler.trackPurchase(total,
+        if !isEitherUserIdOrEmailSet() && config.enableAnonTracking && localStorage.userIdAnnon == nil{
+            anonymousUserManager.trackAnonPurchaseEvent(total: total, items: items, dataFields: dataFields)
+        }
+        return requestHandler.trackPurchase(total,
                                      items: items,
                                      dataFields: dataFields,
                                      campaignId: campaignId,
                                      templateId: templateId,
+                                     onSuccess: onSuccess,
+                                     onFailure: onFailure)
+    }
+    
+    @discardableResult
+    func trackPurchase(_ total: NSNumber,
+                       items: [CommerceItem],
+                       dataFields: [AnyHashable: Any]? = nil,
+                       createdAt: Int,
+                       onSuccess: OnSuccessHandler? = nil,
+                       onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        return requestHandler.trackPurchase(total,
+                                     items: items,
+                                     dataFields: dataFields,
+                                     createdAt: createdAt,
                                      onSuccess: onSuccess,
                                      onFailure: onFailure)
     }
@@ -329,7 +391,18 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
                dataFields: [AnyHashable: Any]? = nil,
                onSuccess: OnSuccessHandler? = nil,
                onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
-        requestHandler.track(event: eventName, dataFields: dataFields, onSuccess: onSuccess, onFailure: onFailure)
+        if !isEitherUserIdOrEmailSet() && config.enableAnonTracking && localStorage.userIdAnnon == nil {
+            anonymousUserManager.trackAnonEvent(name: eventName, dataFields: dataFields)
+        }
+        return requestHandler.track(event: eventName, dataFields: dataFields, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
+    @discardableResult
+    func track(_ eventName: String,
+               withBody body: [AnyHashable: Any],
+               onSuccess: OnSuccessHandler? = nil,
+               onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        requestHandler.track(event: eventName, withBody: body, onSuccess: onSuccess, onFailure: onFailure)
     }
     
     @discardableResult
@@ -546,8 +619,12 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
         }
     }
     
-    private func isEitherUserIdOrEmailSet() -> Bool {
+    public func isEitherUserIdOrEmailSet() -> Bool {
         IterableUtil.isNotNullOrEmpty(string: _email) || IterableUtil.isNotNullOrEmpty(string: _userId)
+    }
+    
+    public func isAnonUserSet() -> Bool {
+        IterableUtil.isNotNullOrEmpty(string: localStorage.userIdAnnon)
     }
     
     private func logoutPreviousUser() {
@@ -663,6 +740,9 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
         networkSession = dependencyContainer.networkSession
         notificationStateProvider = dependencyContainer.notificationStateProvider
         localStorage = dependencyContainer.localStorage
+        //localStorage.userIdAnnon = nil      // remove this before pushing the code (only for testing)
+        //localStorage.userId = nil      // remove this before pushing the code (only for testing)
+        //localStorage.email = nil      // remove this before pushing the code (only for testing)
         inAppDisplayer = dependencyContainer.inAppDisplayer
         urlOpener = dependencyContainer.urlOpener
         deepLinkManager = DeepLinkManager(redirectNetworkSessionProvider: dependencyContainer)
@@ -757,6 +837,17 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
         }.onError { error in
             let offlineMode = self.requestHandler.offlineMode
             ITBError("Could not get remote configuration: \(error.localizedDescription), using saved value: \(offlineMode)")
+        }
+    }
+    
+    func getCriteriaData(completion: @escaping (Data) -> Void) {
+        apiClient.getCriteria().onSuccess { data in
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+                completion(jsonData)
+            } catch {
+                print("Error converting dictionary to data: \(error)")
+            }
         }
     }
     

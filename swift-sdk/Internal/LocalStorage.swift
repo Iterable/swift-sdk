@@ -5,6 +5,7 @@
 import Foundation
 
 struct LocalStorage: LocalStorageProtocol {
+    
     init(userDefaults: UserDefaults = UserDefaults.standard,
          keychain: IterableKeychain = IterableKeychain()) {
         iterableUserDefaults = IterableUserDefaults(userDefaults: userDefaults)
@@ -16,6 +17,14 @@ struct LocalStorage: LocalStorageProtocol {
             keychain.userId
         } set {
             keychain.userId = newValue
+        }
+    }
+    
+    var userIdAnnon: String? {
+        get {
+            keychain.userIdAnnon
+        } set {
+            keychain.userIdAnnon = newValue
         }
     }
     
@@ -64,6 +73,30 @@ struct LocalStorage: LocalStorageProtocol {
             iterableUserDefaults.offlineMode
         } set {
             iterableUserDefaults.offlineMode = newValue
+        }
+    }
+    
+    var anonymousUserEvents: [[AnyHashable: Any]]? {
+        get {
+            iterableUserDefaults.anonymousUserEvents
+        } set {
+            iterableUserDefaults.anonymousUserEvents = newValue
+        }
+    }
+
+    var anonymousSessions: IterableAnonSessionsWrapper? {
+        get {
+            iterableUserDefaults.anonymousSessions
+        } set {
+            iterableUserDefaults.anonymousSessions = newValue
+        }
+    }
+
+    var criteriaData: Data? {
+        get {
+            iterableUserDefaults.criteriaData
+        } set {
+            iterableUserDefaults.criteriaData = newValue
         }
     }
     
