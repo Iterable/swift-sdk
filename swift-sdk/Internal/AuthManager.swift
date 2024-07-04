@@ -35,7 +35,7 @@ class AuthManager: IterableAuthManagerProtocol {
         hasFailedPriorAuth = false
     }
     
-    func requestNewAuthToken(hasFailedPriorAuth: Bool = false, onSuccess: AuthTokenRetrievalHandler? = nil) {
+    func requestNewAuthToken(hasFailedPriorAuth: Bool = false, onSuccess: AuthTokenRetrievalHandler? = nil, onFailure: AuthTokenRetrievalHandler? = nil) {
         ITBInfo()
         
         guard !pendingAuth else {
@@ -51,7 +51,7 @@ class AuthManager: IterableAuthManagerProtocol {
         pendingAuth = true
         
         delegate?.onAuthTokenRequested { [weak self] retrievedAuthToken in
-            self?.onAuthTokenReceived(retrievedAuthToken: retrievedAuthToken, onSuccess: onSuccess)
+            self?.onAuthTokenReceived(retrievedAuthToken: retrievedAuthToken, onSuccess: onSuccess, onFailure: onFailure)
         }
     }
     
@@ -96,7 +96,7 @@ class AuthManager: IterableAuthManagerProtocol {
         queueAuthTokenExpirationRefresh(authToken)
     }
     
-    private func onAuthTokenReceived(retrievedAuthToken: String?, onSuccess: AuthTokenRetrievalHandler? = nil) {
+    private func onAuthTokenReceived(retrievedAuthToken: String?, onSuccess: AuthTokenRetrievalHandler? = nil, onFailure: AuthTokenRetrievalHandler? = nil) {
         ITBInfo()
         
         pendingAuth = false
@@ -106,6 +106,7 @@ class AuthManager: IterableAuthManagerProtocol {
             
             /// by default, schedule a refresh for 10s
             scheduleAuthTokenRefreshTimer(10)
+            onFailure?(nil)
             
             return
         }

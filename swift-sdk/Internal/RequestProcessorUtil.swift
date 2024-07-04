@@ -24,6 +24,8 @@ struct RequestProcessorUtil {
                     }.onError { error in
                         reportFailure(result: result, error: error, failureHandler: onFailure, identifier: identifier)
                     }
+                } onFailure: { _ in
+                    reportFailure(result: result, error: error, failureHandler: onFailure, identifier: identifier)
                 }
             } else if error.httpStatusCode == 401, error.iterableCode == JsonValue.Code.badApiKey {
                 ITBError(error.reason)
@@ -51,7 +53,7 @@ struct RequestProcessorUtil {
         }.onError { error in
             if error.httpStatusCode == 401, error.iterableCode == JsonValue.Code.invalidJwtPayload {
                 ITBError(error.reason)
-                authManager?.requestNewAuthToken(hasFailedPriorAuth: true, onSuccess: nil)
+                authManager?.requestNewAuthToken(hasFailedPriorAuth: true, onSuccess: nil, onFailure: nil)
             } else if error.httpStatusCode == 401, error.iterableCode == JsonValue.Code.badApiKey {
                 ITBError(error.reason)
             }
