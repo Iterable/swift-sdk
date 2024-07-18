@@ -86,6 +86,17 @@ struct OnlineRequestProcessor: RequestProcessorProtocol {
     }
     
     @discardableResult
+    func updateCart(items: [CommerceItem],
+                    createdAt: Int,
+                    onSuccess: OnSuccessHandler? = nil,
+                    onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        sendRequest(requestProvider: { apiClient.updateCart(items: items, createdAt: createdAt) },
+                    successHandler: onSuccess,
+                    failureHandler: onFailure,
+                    requestIdentifier: "updateCart")
+    }
+    
+    @discardableResult
     func trackPurchase(_ total: NSNumber,
                        items: [CommerceItem],
                        dataFields: [AnyHashable: Any]? = nil,
@@ -98,6 +109,16 @@ struct OnlineRequestProcessor: RequestProcessorProtocol {
                                                        dataFields: dataFields,
                                                        campaignId: campaignId,
                                                        templateId: templateId) },
+                    successHandler: onSuccess,
+                    failureHandler: onFailure,
+                    requestIdentifier: "trackPurchase")
+    }
+    
+    func trackPurchase(_ total: NSNumber, items: [CommerceItem], dataFields: [AnyHashable : Any]?, createdAt: Int, onSuccess: OnSuccessHandler?, onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError> {
+        sendRequest(requestProvider: { apiClient.track(purchase: total,
+                                                       items: items,
+                                                       dataFields: dataFields,
+                                                       createdAt: createdAt)},
                     successHandler: onSuccess,
                     failureHandler: onFailure,
                     requestIdentifier: "trackPurchase")
@@ -127,6 +148,17 @@ struct OnlineRequestProcessor: RequestProcessorProtocol {
                onSuccess: OnSuccessHandler? = nil,
                onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
         sendRequest(requestProvider: { apiClient.track(event: event, dataFields: dataFields) },
+                    successHandler: onSuccess,
+                    failureHandler: onFailure,
+                    requestIdentifier: "trackEvent")
+    }
+    
+    @discardableResult
+    func track(event: String,
+               withBody body: [AnyHashable: Any]? = nil,
+               onSuccess: OnSuccessHandler? = nil,
+               onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
+        sendRequest(requestProvider: { apiClient.track(event: event, withBody: body) },
                     successHandler: onSuccess,
                     failureHandler: onFailure,
                     requestIdentifier: "trackEvent")

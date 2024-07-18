@@ -69,6 +69,9 @@ class AuthManager: IterableAuthManagerProtocol {
         storeAuthToken()
         
         clearRefreshTimer()
+        
+        localStorage.anonymousUserEvents = nil
+        localStorage.anonymousSessions = nil
     }
     
     // MARK: - Private/Internal
