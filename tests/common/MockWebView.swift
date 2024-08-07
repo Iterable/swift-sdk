@@ -23,10 +23,6 @@ class MockWebView: WebViewProtocol {
     
     func set(navigationDelegate _: WKNavigationDelegate?) {}
     
-    func evaluateJavaScript(_: String, completionHandler: ((Any?, Error?) -> Void)?) {
-        completionHandler?(height, nil)
-    }
-    
     func layoutSubviews() {}
     
     func calculateHeight() -> Pending<CGFloat, IterableError> {

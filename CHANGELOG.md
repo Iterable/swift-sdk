@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.5.4]
+### Fixed
+- SDK is now compatible with Xcode 16 beta 2
+
 ## [6.5.3]
 ### Changed
 - Deprecated support for iOS 10 and iOS 11.
