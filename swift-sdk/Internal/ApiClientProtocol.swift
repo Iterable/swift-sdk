@@ -9,7 +9,7 @@ protocol ApiClientProtocol: AnyObject {
     
     func updateUser(_ dataFields: [AnyHashable: Any], mergeNestedObjects: Bool) -> Pending<SendRequestValue, SendRequestError>
     
-    func updateEmail(newEmail: String) -> Pending<SendRequestValue, SendRequestError>
+    func updateEmail(newEmail: String, merge: Bool?) -> Pending<SendRequestValue, SendRequestError>
     
     func updateCart(items: [CommerceItem]) -> Pending<SendRequestValue, SendRequestError>
     

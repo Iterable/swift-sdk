@@ -78,9 +78,11 @@ class RequestHandler: RequestHandlerProtocol {
     
     @discardableResult
     func updateEmail(_ newEmail: String,
+                     merge: Bool?,
                      onSuccess: OnSuccessHandler?,
                      onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError> {
         onlineProcessor.updateEmail(newEmail,
+                                    merge: merge,
                                     onSuccess: onSuccess,
                                     onFailure: onFailure)
     }
