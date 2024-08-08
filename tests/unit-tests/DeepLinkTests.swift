@@ -44,10 +44,11 @@ class DeepLinkTests: XCTestCase {
                                                                           messageId: messageId)
         let deepLinkManager = DeepLinkManager(redirectNetworkSessionProvider: networkSessionProvider)
         
-        let (isIterableLink, attributionInfoFuture) = deepLinkManager.handleUniversalLink(URL(string: iterableRewriteURL)!,
-                                                                      urlDelegate: mockUrlDelegate,
-                                                                      urlOpener: MockUrlOpener())
-        XCTAssertTrue(isIterableLink)
+        let (shouldHandleLink, attributionInfoFuture) = deepLinkManager.handleUniversalLink(URL(string: iterableRewriteURL)!,
+                                                                                            urlDelegate: mockUrlDelegate,
+                                                                                            urlOpener: MockUrlOpener())
+        XCTAssertTrue(shouldHandleLink)
+        
         attributionInfoFuture.onSuccess { attributionInfo in
             XCTAssertEqual(attributionInfo?.campaignId, NSNumber(value: campaignId))
             XCTAssertEqual(attributionInfo?.templateId, NSNumber(value: templateId))
@@ -61,6 +62,7 @@ class DeepLinkTests: XCTestCase {
         let expectation1 = expectation(description: "testUniversalDeepLinkNoRewrite")
         
         let mockUrlDelegate = MockUrlDelegate(returnValue: true)
+        
         mockUrlDelegate.callback = { url, context in
             XCTAssertEqual(url.absoluteString, self.iterableNoRewriteURL)
             XCTAssertTrue(Thread.isMainThread)
@@ -70,11 +72,12 @@ class DeepLinkTests: XCTestCase {
         
         let deepLinkManager = DeepLinkManager(redirectNetworkSessionProvider: createNoRedirectNetworkSessionProvider())
         
-        let (isIterableLink, _) = deepLinkManager.handleUniversalLink(URL(string: iterableNoRewriteURL)!,
-                                                                      urlDelegate: mockUrlDelegate,
-                                                                      urlOpener: MockUrlOpener())
+        let (shouldHandleLink, _) = deepLinkManager.handleUniversalLink(URL(string: iterableNoRewriteURL)!,
+                                                                        urlDelegate: mockUrlDelegate,
+                                                                        urlOpener: MockUrlOpener())
         
-        XCTAssertFalse(isIterableLink)
+        XCTAssertTrue(shouldHandleLink)
+        
         wait(for: [expectation1], timeout: testExpectationTimeout)
     }
 
