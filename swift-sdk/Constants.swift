@@ -237,7 +237,7 @@ enum JsonKey {
         
         enum Comparator {
             static let Equals = "Equals"
-            static let DoesNotEquals = "DoesNotEquals"
+            static let DoesNotEquals = "DoesNotEqual"
             static let IsSet = "IsSet"
             static let GreaterThan = "GreaterThan"
             static let LessThan = "LessThan"
