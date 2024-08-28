@@ -46,13 +46,16 @@ class DeepLinkManager: NSObject {
             if let action = IterableAction.actionOpenUrl(fromUrlString: url.absoluteString) {
                 let context = IterableActionContext(action: action, source: .universalLink)
                 
-                ActionRunner.execute(action: action,
-                                             context: context,
-                                             urlHandler: IterableUtil.urlHandler(fromUrlDelegate: urlDelegate,
-                                                                                 inContext: context),
-                                             urlOpener: urlOpener,
-                                             allowedProtocols: allowedProtocols)
+                let result = ActionRunner.execute(action: action,
+                                                  context: context,
+                                                  urlHandler: IterableUtil.urlHandler(fromUrlDelegate: urlDelegate,
+                                                                                      inContext: context),
+                                                  urlOpener: urlOpener,
+                                                  allowedProtocols: allowedProtocols)
+                
+                return (result, Fulfill<IterableAttributionInfo?, Error>(value: nil))
             }
+            
             return (false, Fulfill<IterableAttributionInfo?, Error>(value: nil))
         }
     }
