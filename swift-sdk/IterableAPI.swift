@@ -7,7 +7,7 @@ import UIKit
 
 @objcMembers public final class IterableAPI: NSObject {
     /// The current SDK version
-    public static let sdkVersion = "6.5.4"
+    public static let sdkVersion = "6.5.7"
     
     /// The email of the logged in user that this IterableAPI is using
     public static var email: String? {
@@ -254,6 +254,14 @@ import UIKit
     @objc(registerToken:onSuccess:OnFailure:)
     public static func register(token: Data, onSuccess: OnSuccessHandler? = nil, onFailure: OnFailureHandler? = nil) {
         implementation?.register(token: token, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
+    @objc(pauseAuthRetries:)
+    public static func pauseAuthRetries(_ pauseRetry: Bool) {
+        implementation?.authManager.pauseAuthRetries(pauseRetry)
+        if !pauseRetry { // request new auth token as soon as unpause
+            implementation?.authManager.requestNewAuthToken(hasFailedPriorAuth: false, onSuccess: nil, shouldIgnoreRetryPolicy: true)
+        }
     }
     
     /// Disable this device's token in Iterable, for the current user.

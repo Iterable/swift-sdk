@@ -57,7 +57,7 @@ struct SendRequestError: Error {
                 iterableCode = jsonDict[JsonKey.Response.iterableCode] as? String
             }
             
-            return SendRequestError(reason: "Invalid API Key",
+            return SendRequestError(reason: networkError.reason,
                                     data: networkError.data,
                                     httpStatusCode: httpStatusCode,
                                     iterableCode: iterableCode,

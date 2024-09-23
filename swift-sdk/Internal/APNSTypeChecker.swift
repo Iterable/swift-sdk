@@ -59,16 +59,36 @@ struct APNSTypeChecker: APNSTypeCheckerProtocol {
     }
     
     static func readMobileProvision(fromPath path: String) -> [AnyHashable: Any] {
-        guard let asciiString = try? String(contentsOfFile: path, encoding: .ascii) else {
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
             ITBError("Could not read file: \(path)")
             return [:]
         }
+
+        let encodings: [String.Encoding] = [
+            .ascii,
+            .isoLatin1,
+            .utf8,
+            .utf16,
+            .utf16BigEndian,
+            .utf16LittleEndian,
+            .utf32,
+            .utf32BigEndian,
+            .utf32LittleEndian,
+            .macOSRoman
+        ]
         
-        guard let propertyListString = scan(string: asciiString, begin: "<plist", end: "</plist>") else {
-            return [:]
+        var plistString: String?
+        
+        for encoding in encodings {
+            if let string = String(data: data, encoding: encoding),
+            let propertyListString = scan(string: string, begin: "<plist", end: "</plist>") {
+                plistString = propertyListString
+                break
+            }
         }
         
-        guard let propertyListData = propertyListString.data(using: .utf8) else {
+        guard let propertyListData = plistString?.data(using: .utf8) else {
+            ITBDebug("Failed to detect APNS type from provisioning file. Defaulting to type - Production. Please use IterableConfig.pushPlatform to manually set APNS platform type")
             return [:]
         }
         

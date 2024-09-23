@@ -319,7 +319,7 @@ struct OfflineRequestProcessor: RequestProcessorProtocol {
         return RequestCreator(auth: authProvider.auth, deviceMetadata: deviceMetadata)
     }
     
-    private func sendIterableRequest(requestGenerator: (RequestCreator) -> Result<IterableRequest, IterableError>,
+    private func sendIterableRequest(requestGenerator: @escaping (RequestCreator) -> Result<IterableRequest, IterableError>,
                                      successHandler onSuccess: OnSuccessHandler?,
                                      failureHandler onFailure: OnFailureHandler?,
                                      identifier: String) -> Pending<SendRequestValue, SendRequestError> {
@@ -343,11 +343,25 @@ struct OfflineRequestProcessor: RequestProcessorProtocol {
             SendRequestError.from(error: error)
         }.flatMap { taskId -> Pending<SendRequestValue, SendRequestError> in
             let pendingTask = notificationListener.futureFromTask(withTaskId: taskId)
-            return RequestProcessorUtil.apply(successHandler: onSuccess,
+            let result = RequestProcessorUtil.apply(successHandler: onSuccess,
                                               andFailureHandler: onFailure,
                                               andAuthManager: authManager,
                                               toResult: pendingTask,
                                               withIdentifier: identifier)
+            result.onError { error in
+                if error.httpStatusCode == 401, RequestProcessorUtil.matchesJWTErrorCode(error.iterableCode) {
+                    authManager?.handleAuthFailure(failedAuthToken: authManager?.getAuthToken(), reason: RequestProcessorUtil.getMappedErrorCodeForMessage(error.reason ?? ""))
+                    authManager?.setIsLastAuthTokenValid(false)
+                    let retryInterval = authManager?.getNextRetryInterval() ?? 1
+                    DispatchQueue.main.async {
+                        authManager?.scheduleAuthTokenRefreshTimer(interval: retryInterval, isScheduledRefresh: false, successCallback: { _ in
+                            _ = sendIterableRequest(requestGenerator: requestGenerator, successHandler: onSuccess, failureHandler: onFailure, identifier: identifier)
+                        })
+                    }
+
+                }
+            }
+            return result
         }
     }
 

@@ -156,6 +156,12 @@ struct NetworkHelper {
         if httpStatusCode >= 500 {
             return .failure(NetworkError(reason: "Internal Server Error", data: data, httpStatusCode: httpStatusCode))
         } else if httpStatusCode >= 400 {
+            
+            if let data = data, 
+                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                let msg = json["msg"] as? String {
+                return .failure(NetworkError(reason: msg, data: data, httpStatusCode: httpStatusCode))
+            }
             return .failure(NetworkError(reason: "Invalid Request", data: data, httpStatusCode: httpStatusCode))
         } else if httpStatusCode == 200 {
             if let data = data, data.count > 0 {

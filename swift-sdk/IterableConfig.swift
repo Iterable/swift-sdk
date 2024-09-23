@@ -55,7 +55,7 @@ import Foundation
 /// The delegate for getting the authentication token
 @objc public protocol IterableAuthDelegate: AnyObject {
     @objc func onAuthTokenRequested(completion: @escaping AuthTokenRetrievalHandler)
-    @objc func onTokenRegistrationFailed(_ reason: String?)
+    @objc func onAuthFailure(_ authFailure: AuthFailure)
 }
 
 /// Iterable Configuration Object. Use this when initializing the API.
@@ -117,6 +117,9 @@ public class IterableConfig: NSObject {
     /// will only apply if token-based authentication is enabled, and the current auth token has
     /// an expiration date field in it
     public var expiringAuthTokenRefreshPeriod: TimeInterval = 60.0
+    
+    /// Retry policy for JWT Refresh.
+    public var retryPolicy: RetryPolicy = RetryPolicy(maxRetry: 10, retryInterval: 6, retryBackoff: .linear)
     
     /// We allow navigation only to urls with `https` protocol (for deep links within your app or external links).
     /// If you want to allow other protocols, such as,  `http`, `tel` etc., please add them to the list below

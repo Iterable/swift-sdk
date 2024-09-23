@@ -401,8 +401,11 @@
 		ACFF42B02465B4AE00FDF10D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFF42AF2465B4AE00FDF10D /* AppDelegate.swift */; };
 		BA2BB8192BADD5A500EA0229 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BA2BB8182BADD5A500EA0229 /* PrivacyInfo.xcprivacy */; };
 		BA2BB81A2BADD5A500EA0229 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BA2BB8182BADD5A500EA0229 /* PrivacyInfo.xcprivacy */; };
+		E9003E012BF4DF15004AB45B /* RetryPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9003E002BF4DF15004AB45B /* RetryPolicy.swift */; };
 		E9BF47962B46D5DC0033DB69 /* IterableEmbeddedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BF47952B46D5DC0033DB69 /* IterableEmbeddedView.swift */; };
 		E9BF47982B46DEB30033DB69 /* IterableEmbeddedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9BF47972B46DEB30033DB69 /* IterableEmbeddedView.xib */; };
+		E9FF7FD12BFCBD90000409ED /* AuthFailure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF7FD02BFCBD90000409ED /* AuthFailure.swift */; };
+		E9FF7FD32BFCBDB9000409ED /* AuthFailureReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF7FD22BFCBDB9000409ED /* AuthFailureReason.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -805,8 +808,11 @@
 		ACFF42AE24656ECF00FDF10D /* ui-tests-app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ui-tests-app.entitlements"; sourceTree = "<group>"; };
 		ACFF42AF2465B4AE00FDF10D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA2BB8182BADD5A500EA0229 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		E9003E002BF4DF15004AB45B /* RetryPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicy.swift; sourceTree = "<group>"; };
 		E9BF47952B46D5DC0033DB69 /* IterableEmbeddedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IterableEmbeddedView.swift; sourceTree = "<group>"; };
 		E9BF47972B46DEB30033DB69 /* IterableEmbeddedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IterableEmbeddedView.xib; sourceTree = "<group>"; };
+		E9FF7FD02BFCBD90000409ED /* AuthFailure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFailure.swift; sourceTree = "<group>"; };
+		E9FF7FD22BFCBDB9000409ED /* AuthFailureReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFailureReason.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1063,6 +1069,9 @@
 				AC3C10F8213F46A900A9B839 /* IterableLogging.swift */,
 				ACA8D1A221910C66001B1332 /* IterableMessaging.swift */,
 				AC78F0E6253D7F09006378A5 /* IterablePushNotificationMetadata.swift */,
+				E9FF7FD02BFCBD90000409ED /* AuthFailure.swift */,
+				E9FF7FD22BFCBDB9000409ED /* AuthFailureReason.swift */,
+				E9003E002BF4DF15004AB45B /* RetryPolicy.swift */,
 			);
 			path = "swift-sdk";
 			sourceTree = "<group>";
@@ -2089,6 +2098,7 @@
 				AC72A0D220CF4D12004D7997 /* IterableUtil.swift in Sources */,
 				AC32E16821DD55B900BD4F83 /* OrderedDictionary.swift in Sources */,
 				ACF406232507BC72005FD775 /* NetworkMonitor.swift in Sources */,
+				E9003E012BF4DF15004AB45B /* RetryPolicy.swift in Sources */,
 				AC1712892416AEF400F2BB0E /* WebViewProtocol.swift in Sources */,
 				AC3C10F9213F46A900A9B839 /* IterableLogging.swift in Sources */,
 				55DD207F26A0D83800773CC7 /* IterableAuthManagerProtocol.swift in Sources */,
@@ -2117,6 +2127,7 @@
 				551FA7582988A8FC0072D0A9 /* IterableEmbeddedManagerProtocol.swift in Sources */,
 				AC776DA6211A1B8A00C27C27 /* IterableRequestUtil.swift in Sources */,
 				55DD2053269FA28200773CC7 /* IterableInAppManagerProtocol.swift in Sources */,
+				E9FF7FD32BFCBDB9000409ED /* AuthFailureReason.swift in Sources */,
 				ACEDF41D2183C2EC000B9BFE /* Pending.swift in Sources */,
 				552A0AA7280E1FDA00A80963 /* DeepLinkManager.swift in Sources */,
 				E9BF47962B46D5DC0033DB69 /* IterableEmbeddedView.swift in Sources */,
@@ -2149,6 +2160,7 @@
 				AC347B5C20E5A7E1003449CF /* APNSTypeChecker.swift in Sources */,
 				ACD2B84F25B15CFA005D7A90 /* RequestSender.swift in Sources */,
 				AC3A336D24F65579008225BA /* RequestProcessorUtil.swift in Sources */,
+				E9FF7FD12BFCBD90000409ED /* AuthFailure.swift in Sources */,
 				55DD2041269FA24400773CC7 /* IterableInAppMessage.swift in Sources */,
 				AC8E7CA524C7555E0039605F /* CoreDataUtil.swift in Sources */,
 				AC1AA1C624EBB2DC00F29C6B /* IterableTaskRunner.swift in Sources */,

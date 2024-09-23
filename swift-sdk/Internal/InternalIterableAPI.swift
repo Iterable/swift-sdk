@@ -582,6 +582,7 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
     private func onLogin(_ authToken: String? = nil) {
         ITBInfo()
         
+        self.authManager.pauseAuthRetries(false)
         if let authToken = authToken {
             self.authManager.setNewToken(authToken)
             completeUserLogin()
@@ -599,7 +600,7 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
             if token != nil {
                 self?.completeUserLogin()
             }
-        })
+        }, shouldIgnoreRetryPolicy: true)
     }
     
     private func completeUserLogin() {

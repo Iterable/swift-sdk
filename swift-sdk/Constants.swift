@@ -15,6 +15,7 @@ enum Const {
     
     static let deepLinkRegex = "/a/[a-zA-Z0-9]+"
     static let href = "href"
+    static let exponentialFactor = 2.0
     
     enum Http {
         static let GET = "GET"
@@ -286,6 +287,8 @@ enum JsonValue {
     enum Code {
         static let badApiKey = "BadApiKey"
         static let invalidJwtPayload = "InvalidJwtPayload"
+        static let badAuthorizationHeader = "BadAuthorizationHeader"
+        static let jwtUserIdentifiersMismatched = "JwtUserIdentifiersMismatched"
     }
 }
 
