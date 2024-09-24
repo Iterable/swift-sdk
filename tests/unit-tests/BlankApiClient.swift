@@ -15,7 +15,7 @@ class BlankApiClient: ApiClientProtocol {
         Pending()
     }
     
-    func updateEmail(newEmail: String) -> Pending<SendRequestValue, SendRequestError> {
+    func updateEmail(newEmail: String, merge: Bool?) -> Pending<SendRequestValue, SendRequestError> {
         Pending()
     }
     

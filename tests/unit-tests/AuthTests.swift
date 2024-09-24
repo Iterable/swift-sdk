@@ -202,6 +202,7 @@ class AuthTests: XCTestCase {
         XCTAssertEqual(API.auth.authToken, originalToken)
         
         API.updateEmail(updatedEmail,
+                        merge: true,
                         onSuccess: { data in
                             XCTAssertEqual(API.email, updatedEmail)
                             XCTAssertNil(API.userId)
@@ -244,7 +245,7 @@ class AuthTests: XCTestCase {
         XCTAssertNil(API.userId)
         XCTAssertEqual(API.auth.authToken, originalToken)
         
-        API.updateEmail(updatedEmail, withToken: updatedToken) { data in
+        API.updateEmail(updatedEmail, merge: true, withToken: updatedToken) { data in
             XCTAssertEqual(API.email, updatedEmail)
             XCTAssertNil(API.userId)
             XCTAssertEqual(API.auth.authToken, updatedToken)

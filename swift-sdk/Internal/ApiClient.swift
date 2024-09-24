@@ -108,8 +108,8 @@ extension ApiClient: ApiClientProtocol {
         return send(iterableRequestResult: result)
     }
     
-    func updateEmail(newEmail: String) -> Pending<SendRequestValue, SendRequestError> {
-        let result = createRequestCreator().flatMap { $0.createUpdateEmailRequest(newEmail: newEmail) }
+    func updateEmail(newEmail: String, merge: Bool?) -> Pending<SendRequestValue, SendRequestError> {
+        let result = createRequestCreator().flatMap { $0.createUpdateEmailRequest(newEmail: newEmail, merge: merge) }
         return send(iterableRequestResult: result)
     }
     

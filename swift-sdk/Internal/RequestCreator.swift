@@ -14,7 +14,7 @@ struct RequestCreator {
     
     // MARK: - API REQUEST CALLS
     
-    func createUpdateEmailRequest(newEmail: String) -> Result<IterableRequest, IterableError> {
+    func createUpdateEmailRequest(newEmail: String, merge: Bool?) -> Result<IterableRequest, IterableError> {
         if case .none = auth.emailOrUserId {
             ITBError(Self.authMissingMessage)
             return .failure(IterableError.general(description: Self.authMissingMessage))
@@ -27,7 +27,9 @@ struct RequestCreator {
         } else if let userId = auth.userId {
             body[JsonKey.currentUserId] = userId
         }
-        
+        if let accountMerge = merge {
+            body[JsonKey.merge] = accountMerge
+        }
         body[JsonKey.newEmail] = newEmail
         
         return .success(.post(createPostRequest(path: Const.Path.updateEmail, body: body)))

@@ -246,10 +246,12 @@ final class InternalIterableAPI: NSObject, PushTrackerProtocol, AuthProvider {
     
     @discardableResult
     func updateEmail(_ newEmail: String,
+                     merge: Bool? = nil,
                      withToken token: String? = nil,
                      onSuccess: OnSuccessHandler? = nil,
                      onFailure: OnFailureHandler? = nil) -> Pending<SendRequestValue, SendRequestError> {
         requestHandler.updateEmail(newEmail,
+                                   merge: merge,
                                    onSuccess: nil,
                                    onFailure: nil).onSuccess { json in
             if self.email != nil {

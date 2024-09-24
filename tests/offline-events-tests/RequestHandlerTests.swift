@@ -156,6 +156,7 @@ class RequestHandlerTests: XCTestCase {
         
         let requestGenerator = { (requestHandler: RequestHandlerProtocol) in
             requestHandler.updateEmail("new_user@example.com",
+                                       merge: nil,
                                        onSuccess: expectations.onSuccess,
                                        onFailure: expectations.onFailure)
         }
@@ -166,7 +167,30 @@ class RequestHandlerTests: XCTestCase {
         
         wait(for: [expectations.successExpectation, expectations.failureExpectation], timeout: testExpectationTimeout)
     }
-    
+
+    func testUpdateEmailWithMerge() throws {
+        let bodyDict: [String: Any] = [
+            "currentEmail": "user@example.com",
+            "newEmail": "new_user@example.com",
+            "merge": true
+        ]
+
+        let expectations = createExpectations(description: #function)
+
+        let requestGenerator = { (requestHandler: RequestHandlerProtocol) in
+            requestHandler.updateEmail("new_user@example.com",
+                                       merge: true,
+                                       onSuccess: expectations.onSuccess,
+                                       onFailure: expectations.onFailure)
+        }
+
+        try handleRequestWithSuccessAndFailure(requestGenerator: requestGenerator,
+                                                path: Const.Path.updateEmail,
+                                                bodyDict: bodyDict)
+
+        wait(for: [expectations.successExpectation, expectations.failureExpectation], timeout: testExpectationTimeout)
+    }
+
     func testTrackPurchase() throws {
         let total = NSNumber(value: 15.32)
         let items = [CommerceItem(id: "id1", name: "myCommerceItem", price: 5.1, quantity: 2)]

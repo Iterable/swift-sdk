@@ -35,6 +35,7 @@ protocol RequestHandlerProtocol: AnyObject {
     
     @discardableResult
     func updateEmail(_ newEmail: String,
+                     merge: Bool?,
                      onSuccess: OnSuccessHandler?,
                      onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError>
     

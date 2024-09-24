@@ -334,7 +334,7 @@ import UIKit
     /// - SeeAlso: OnSuccessHandler, OnFailureHandler
     @objc(updateEmail:onSuccess:onFailure:)
     public static func updateEmail(_ newEmail: String, onSuccess: OnSuccessHandler?, onFailure: OnFailureHandler?) {
-        implementation?.updateEmail(newEmail, onSuccess: onSuccess, onFailure: onFailure)
+        implementation?.updateEmail(newEmail, merge: nil, onSuccess: onSuccess, onFailure: onFailure)
     }
     
     /// Updates the current user's email, and set the new authentication token
@@ -353,9 +353,46 @@ import UIKit
                                    withToken token: String,
                                    onSuccess: OnSuccessHandler?,
                                    onFailure: OnFailureHandler?) {
-        implementation?.updateEmail(newEmail, withToken: token, onSuccess: onSuccess, onFailure: onFailure)
+        implementation?.updateEmail(newEmail, merge: nil, withToken: token, onSuccess: onSuccess, onFailure: onFailure)
     }
-    
+
+    /// Updates the current user's email, allowing for account merging
+    ///
+    /// - Parameters:
+    ///    - newEmail: The new email address
+    ///    - merge: whether or not to merge the current account into the new account
+    ///    - onSuccess: `OnSuccessHandler` to invoke if update is successful
+    ///    - onFailure: `OnFailureHandler` to invoke if update fails
+    ///
+    /// - Remark: Also updates the current email in this IterableAPIImplementation instance if the API call was successful.
+    ///
+    /// - SeeAlso: OnSuccessHandler, OnFailureHandler
+    @objc(updateEmail:merge:onSuccess:onFailure:)
+    public static func updateEmail(_ newEmail: String, merge: Bool, onSuccess: OnSuccessHandler?, onFailure: OnFailureHandler?) {
+        implementation?.updateEmail(newEmail, merge: merge, onSuccess: onSuccess, onFailure: onFailure)
+    }
+
+    /// Updates the current user's email, and set the new authentication token
+    ///
+    /// - Parameters:
+    ///    - newEmail: The new email of this user
+    ///    - merge: whether or not to merge the current account into the new account
+    ///    - token: The new authentication token for this user, if left out, the SDK will not update the token in any way
+    ///    - onSuccess: `OnSuccessHandler` to invoke if update is successful
+    ///    - onFailure: `OnFailureHandler` to invoke if update fails
+    ///
+    /// - Remark: Also updates the current email in this internal instance if the API call was successful.
+    ///
+    /// - SeeAlso: OnSuccessHandler, OnFailureHandler
+    @objc(updateEmail:merge:withToken:onSuccess:onFailure:)
+    public static func updateEmail(_ newEmail: String,
+                                   merge: Bool,
+                                   withToken token: String,
+                                   onSuccess: OnSuccessHandler?,
+                                   onFailure: OnFailureHandler?) {
+        implementation?.updateEmail(newEmail, merge: merge, withToken: token, onSuccess: onSuccess, onFailure: onFailure)
+    }
+
     /// Tracks what's in the shopping cart (or equivalent) at this point in time
     ///
     /// - Parameters:
