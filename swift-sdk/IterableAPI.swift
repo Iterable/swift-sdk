@@ -190,6 +190,15 @@ import UIKit
         implementation?.logoutUser()
     }
     
+    /// Logs out the current user from the SDK instance, with custom completion blocks
+    ///
+    /// - Remark: This will empty out user specific authentication data and reset the in-app manager.
+    ///           If `autoPushRegistration` is `true` (which is the default value), this will also
+    ///           disable the current push token.
+    public static func logoutUser(withOnSuccess onSuccess: OnSuccessHandler? = nil, onFailure: OnFailureHandler? = nil) {
+        implementation?.logoutUser(withOnSuccess: onSuccess, onFailure: onFailure)
+    }
+    
     /// The instance that manages getting and showing in-app messages
     ///
     /// ```
