@@ -21,6 +21,11 @@ enum PersistenceConst {
     }
 }
 
+enum PersistentContainerError: Error {
+    /// The persistent store failed to load.
+    case storeFailedToLoad
+}
+
 class PersistentContainer: NSPersistentContainer {
     static var shared: PersistentContainer?
     
@@ -174,6 +179,17 @@ struct CoreDataPersistenceContext: IterablePersistenceContext {
     }
     
     func save() throws {
+        // FIXME: Temporary patch to prevent Objective-C exceptions
+        //
+        // Core Data throws a recoverable error in NSPersistentContainer's `loadPersistentStores:` method,
+        // if you ignore that error, then subsequent calls to `try context.save()` will throw an
+        // Objective-C exception which cannot be caught in Swift.
+        guard
+            let coordinator = managedObjectContext.persistentStoreCoordinator,
+            !coordinator.persistentStores.isEmpty
+        else {
+            throw PersistentContainerError.storeFailedToLoad
+        }
         try managedObjectContext.save()
     }
     
