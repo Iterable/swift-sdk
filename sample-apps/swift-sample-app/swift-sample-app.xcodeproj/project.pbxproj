@@ -489,13 +489,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "swift-sample-app/swift-sample-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BP98Z28R86;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "swift-sample-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.iterable.swift-sample-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -508,13 +508,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "swift-sample-app/swift-sample-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BP98Z28R86;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "swift-sample-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.iterable.swift-sample-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -525,14 +525,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BP98Z28R86;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "swift-sample-app-notification-extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app.swift-sample-app-notification-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.iterable.swift-sample-app.swift-sample-app-notification-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -544,14 +544,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BP98Z28R86;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "swift-sample-app-notification-extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "iterable.swift-sample-app.swift-sample-app-notification-extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.iterable.swift-sample-app.swift-sample-app-notification-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;

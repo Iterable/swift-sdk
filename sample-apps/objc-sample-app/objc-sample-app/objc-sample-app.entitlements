@@ -6,8 +6,8 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:majumder.me</string>
-		<string>applinks:links.majumder.me</string>
+		<string>applinks:example.com</string>
+		<string>applinks:links.example.com</string>
 	</array>
 </dict>
 </plist>

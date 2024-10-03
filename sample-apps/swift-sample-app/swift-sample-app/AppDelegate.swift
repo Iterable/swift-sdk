@@ -165,7 +165,7 @@ extension AppDelegate: IterableCustomActionDelegate {
     func handle(iterableCustomAction action: IterableAction, inContext _: IterableActionContext) -> Bool {
         if action.type == "handleFindCoffee" {
             if let query = action.userInput {
-                return DeepLinkHandler.handle(url: URL(string: "https://majumder.me/coffee?q=\(query)")!)
+                return DeepLinkHandler.handle(url: URL(string: "https://example.com/coffee?q=\(query)")!)
             }
         }
         return false

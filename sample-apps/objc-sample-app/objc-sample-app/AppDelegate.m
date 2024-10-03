@@ -134,7 +134,7 @@ NSString *iterableApiKey = @"";
 - (BOOL)handleIterableCustomAction:(IterableAction *)action context:(IterableActionContext *)context {
     if ([action.type isEqualToString:@"handleFindCoffee"]) {
         if (action.userInput != nil) {
-            NSString *urlString = [[NSString alloc] initWithFormat:@"https://majumder.me/coffee?q=%@", action.userInput];
+            NSString *urlString = [[NSString alloc] initWithFormat:@"https://example.com/coffee?q=%@", action.userInput];
             NSURL *url = [[NSURL alloc] initWithString:urlString];
             return [DeepLinkHandler handleURL:url];
         }
