@@ -220,6 +220,19 @@ import UIKit
         return implementation.inAppManager
     }
     
+    /// The instance that manages getting and showing in-app messages
+    ///
+    /// ```
+    /// IterableAPI.scheduleSync()
+    /// ```
+    ///
+    /// - Remark: This variable will do nothing if the SDK has not been initialized yet
+    ///
+    /// - SeeAlso: IterableInAppManagerProtocol
+    public static func scheduleSync() {
+        _ = implementation?.inAppManager.scheduleSync()
+    }
+    
     public static var embeddedManager: IterableEmbeddedManagerProtocol {
         guard let implementation = implementation else {
             ITBError("The Iterable SDK is not initialized yet. Embedded Messaging will not function.")
