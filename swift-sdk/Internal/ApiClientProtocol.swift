@@ -13,11 +13,17 @@ protocol ApiClientProtocol: AnyObject {
     
     func updateCart(items: [CommerceItem]) -> Pending<SendRequestValue, SendRequestError>
     
+    func updateCart(items: [CommerceItem], createdAt: Int) -> Pending<SendRequestValue, SendRequestError>
+    
     func track(purchase total: NSNumber, items: [CommerceItem], dataFields: [AnyHashable: Any]?, campaignId: NSNumber?, templateId: NSNumber?) -> Pending<SendRequestValue, SendRequestError>
+    
+    func track(purchase total: NSNumber, items: [CommerceItem], dataFields: [AnyHashable: Any]?, createdAt: Int) -> Pending<SendRequestValue, SendRequestError>
     
     func track(pushOpen campaignId: NSNumber, templateId: NSNumber?, messageId: String, appAlreadyRunning: Bool, dataFields: [AnyHashable: Any]?) -> Pending<SendRequestValue, SendRequestError>
     
     func track(event eventName: String, dataFields: [AnyHashable: Any]?) -> Pending<SendRequestValue, SendRequestError>
+    
+    func track(event eventName: String, withBody body: [AnyHashable: Any]?) -> Pending<SendRequestValue, SendRequestError>
     
     func updateSubscriptions(_ emailListIds: [NSNumber]?,
                              unsubscribedChannelIds: [NSNumber]?,
@@ -45,7 +51,12 @@ protocol ApiClientProtocol: AnyObject {
     func disableDevice(forAllUsers allUsers: Bool, hexToken: String) -> Pending<SendRequestValue, SendRequestError>
 
     func getRemoteConfiguration() -> Pending<RemoteConfiguration, SendRequestError>
+        
+    func mergeUser(sourceEmail: String?, sourceUserId: String?, destinationEmail: String?, destinationUserId: String?) -> Pending<SendRequestValue, SendRequestError>
     
+    func getCriteria() -> Pending<SendRequestValue, SendRequestError>
+
+    func trackAnonSession(createdAt: Int, withUserId userId: String, dataFields: [AnyHashable: Any]?, requestJson: [AnyHashable: Any])  -> Pending<SendRequestValue, SendRequestError>
     func getEmbeddedMessages() -> Pending<PlacementsPayload, SendRequestError>
     
     @discardableResult func track(embeddedMessageReceived message: IterableEmbeddedMessage) -> Pending<SendRequestValue, SendRequestError>

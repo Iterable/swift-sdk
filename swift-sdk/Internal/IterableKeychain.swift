@@ -45,6 +45,24 @@ class IterableKeychain {
         }
     }
     
+    var userIdAnnon: String? {
+        get {
+            let data = wrapper.data(forKey: Const.Keychain.Key.userIdAnnon)
+            
+            return data.flatMap { String(data: $0, encoding: .utf8) }
+        }
+        
+        set {
+            guard let token = newValue,
+                  let data = token.data(using: .utf8) else {
+                wrapper.removeValue(forKey: Const.Keychain.Key.userIdAnnon)
+                return
+            }
+            
+            wrapper.set(data, forKey: Const.Keychain.Key.userIdAnnon)
+        }
+    }
+    
     var authToken: String? {
         get {
             let data = wrapper.data(forKey: Const.Keychain.Key.authToken)

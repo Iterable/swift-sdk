@@ -10,6 +10,7 @@ class IterableAPIResponseTests: XCTestCase {
     private let apiKey = "zee_api_key"
     private let email = "user@example.com"
     private let authToken = "asdf"
+    
     private let dateProvider = MockDateProvider()
     
     func testHeadersInGetRequest() {
@@ -285,12 +286,12 @@ class IterableAPIResponseTests: XCTestCase {
 
 extension IterableAPIResponseTests: AuthProvider {
     var auth: Auth {
-        Auth(userId: nil, email: email, authToken: authToken)
+        Auth(userId: nil, email: email, authToken: authToken, userIdAnon: nil)
     }
 }
 
 class AuthProviderNoToken: AuthProvider {
     var auth: Auth {
-        Auth(userId: nil, email: "user@example.com", authToken: nil)
+        Auth(userId: nil, email: "user@example.com", authToken: nil, userIdAnon: nil)
     }
 }

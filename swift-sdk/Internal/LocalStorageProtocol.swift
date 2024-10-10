@@ -7,6 +7,8 @@ import Foundation
 protocol LocalStorageProtocol {
     var userId: String? { get set }
     
+    var userIdAnnon: String? { get set }
+    
     var email: String? { get set }
     
     var authToken: String? { get set }
@@ -18,6 +20,14 @@ protocol LocalStorageProtocol {
     var sdkVersion: String? { get set }
     
     var offlineMode: Bool { get set }
+
+    var anonymousUsageTrack: Bool { get set }
+
+    var anonymousUserEvents: [[AnyHashable: Any]]? { get set }
+
+    var criteriaData: Data? { get set }
+
+    var anonymousSessions: IterableAnonSessionsWrapper? { get set }
     
     func getAttributionInfo(currentDate: Date) -> IterableAttributionInfo?
     

@@ -97,6 +97,19 @@ class RequestHandler: RequestHandlerProtocol {
     }
     
     @discardableResult
+    func updateCart(items: [CommerceItem],
+                    createdAt: Int,
+                    onSuccess: OnSuccessHandler?,
+                    onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError> {
+        sendUsingRequestProcessor { processor in
+            processor.updateCart(items: items,
+                                 createdAt: createdAt,
+                                 onSuccess: onSuccess,
+                                 onFailure: onFailure)
+        }
+    }
+    
+    @discardableResult
     func trackPurchase(_ total: NSNumber,
                        items: [CommerceItem],
                        dataFields: [AnyHashable: Any]?,
@@ -110,6 +123,23 @@ class RequestHandler: RequestHandlerProtocol {
                                     dataFields: dataFields,
                                     campaignId: campaignId,
                                     templateId: templateId,
+                                    onSuccess: onSuccess,
+                                    onFailure: onFailure)
+        }
+    }
+    
+    @discardableResult
+    func trackPurchase(_ total: NSNumber,
+                       items: [CommerceItem],
+                       dataFields: [AnyHashable: Any]?,
+                       createdAt: Int,
+                       onSuccess: OnSuccessHandler?,
+                       onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError> {
+        sendUsingRequestProcessor { processor in
+            processor.trackPurchase(total,
+                                    items: items,
+                                    dataFields: dataFields,
+                                    createdAt: createdAt,
                                     onSuccess: onSuccess,
                                     onFailure: onFailure)
         }
@@ -142,6 +172,19 @@ class RequestHandler: RequestHandlerProtocol {
         sendUsingRequestProcessor { processor in
             processor.track(event: event,
                             dataFields: dataFields,
+                            onSuccess: onSuccess,
+                            onFailure: onFailure)
+        }
+    }
+    
+    @discardableResult
+    func track(event: String,
+               withBody body: [AnyHashable: Any]?,
+               onSuccess: OnSuccessHandler?,
+               onFailure: OnFailureHandler?) -> Pending<SendRequestValue, SendRequestError> {
+        sendUsingRequestProcessor { processor in
+            processor.track(event: event,
+                            withBody: body,
                             onSuccess: onSuccess,
                             onFailure: onFailure)
         }

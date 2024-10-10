@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         config.customActionDelegate = self
         config.urlDelegate = self
         config.inAppDisplayInterval = 1
-        
+        config.anonUserDelegate = self
         IterableAPI.initialize(apiKey: iterableApiKey,
                                launchOptions: launchOptions,
                                config: config)
@@ -154,6 +154,12 @@ extension AppDelegate: IterableURLDelegate {
     // return true if we handled the url
     func handle(iterableURL url: URL, inContext _: IterableActionContext) -> Bool {
         DeepLinkHandler.handle(url: url)
+    }
+}
+
+extension AppDelegate: IterableAnonUserDelegate {
+    func onAnonUserCreated(userId: String) {
+        print("UserId Created from anonsession: \(userId)")
     }
 }
 

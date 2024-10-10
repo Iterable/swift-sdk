@@ -7,6 +7,15 @@ import Foundation
 @testable import IterableSDK
 
 class MockLocalStorage: LocalStorageProtocol {
+
+    var userIdAnnon: String?
+    
+    var anonymousUserEvents: [[AnyHashable : Any]]?
+    
+    var criteriaData: Data?
+    
+    var anonymousSessions: IterableSDK.IterableAnonSessionsWrapper?
+    
     var userId: String? = nil
     
     var email: String? = nil
@@ -20,7 +29,9 @@ class MockLocalStorage: LocalStorageProtocol {
     var sdkVersion: String? = nil
     
     var offlineMode: Bool = false
-    
+
+    var anonymousUsageTrack: Bool = true
+
     func getAttributionInfo(currentDate: Date) -> IterableAttributionInfo? {
         guard !MockLocalStorage.isExpired(expiration: attributionInfoExpiration, currentDate: currentDate) else {
             return nil

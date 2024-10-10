@@ -131,6 +131,13 @@ extension DependencyContainerProtocol {
     func createRedirectNetworkSession(delegate: RedirectNetworkSessionDelegate) -> NetworkSessionProtocol {
         RedirectNetworkSession(delegate: delegate)
     }
+
+    func createAnonymousUserManager(config: IterableConfig) -> AnonymousUserManagerProtocol {
+        AnonymousUserManager(config:config,
+                             localStorage: localStorage,
+                             dateProvider: dateProvider,
+                             notificationStateProvider: notificationStateProvider)
+    }
     
     private func createTaskScheduler(persistenceContextProvider: IterablePersistenceContextProvider,
                                      healthMonitor: HealthMonitor) -> IterableTaskScheduler {
@@ -147,5 +154,9 @@ extension DependencyContainerProtocol {
                            healthMonitor: healthMonitor,
                            notificationCenter: notificationCenter,
                            connectivityManager: NetworkConnectivityManager())
+    }
+    
+    func createAnonymousUserMerge(apiClient: ApiClient, anonymousUserManager: AnonymousUserManagerProtocol, localStorage: LocalStorageProtocol) -> AnonymousUserMergeProtocol {
+        AnonymousUserMerge(apiClient: apiClient, anonymousUserManager: anonymousUserManager, localStorage: localStorage)
     }
 }

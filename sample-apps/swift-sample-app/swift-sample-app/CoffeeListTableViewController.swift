@@ -60,22 +60,42 @@ class CoffeeListTableViewController: UITableViewController {
     }
     
     // MARK: - TableViewDataSourceDelegate Functions
-    
-    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        filtering ? filteredCoffees.count : coffees.count
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
-    
+    override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else {
+            return filtering ? filteredCoffees.count : coffees.count
+        }
+
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "coffeeCell", for: indexPath)
-        
-        let coffeeList = filtering ? filteredCoffees : coffees
-        let coffee = coffeeList[indexPath.row]
-        cell.textLabel?.text = coffee.name
-        cell.imageView?.image = coffee.image
-        
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "anonymousUsageTrackCell", for: indexPath)
+            cell.textLabel?.text = IterableAPI.getAnonymousUsageTracked() ? "Tap to enable Anonymous Usage Track" : "Tap to disable Anonymous Usage Track"
+            cell.textLabel?.numberOfLines = 0
+            cell.accessoryType = IterableAPI.getAnonymousUsageTracked() ? .checkmark : .none
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "coffeeCell", for: indexPath)
+            let coffeeList = filtering ? filteredCoffees : coffees
+            let coffee = coffeeList[indexPath.row]
+            cell.textLabel?.text = coffee.name
+            cell.imageView?.image = coffee.image
+            return cell
+        }
     }
-    
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let permissionToTrack = IterableAPI.getAnonymousUsageTracked()
+            IterableAPI.setAnonymousUsageTracked(isAnonymousUsageTracked: !permissionToTrack)
+            self.tableView.reloadData()
+        }
+    }
+
     // MARK: Tap Handlers
     
     @IBAction func loginOutBarButtonTapped(_: UIBarButtonItem) {
@@ -93,7 +113,7 @@ class CoffeeListTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
-        guard let indexPath = tableView.indexPathForSelectedRow else {
+        guard let indexPath = tableView.indexPathForSelectedRow, indexPath.section == 1 else {
             return
         }
         

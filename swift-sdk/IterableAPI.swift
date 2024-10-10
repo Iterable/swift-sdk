@@ -125,16 +125,30 @@ import UIKit
         }.onError { _ in
             callback?(false)
         }
+        
+        if let _implementation = implementation, config.enableAnonTracking, !_implementation.isEitherUserIdOrEmailSet(), _implementation.getAnonymousUsageTracked() {
+            _implementation.anonymousUserManager.getAnonCriteria()
+            _implementation.anonymousUserManager.updateAnonSession()
+        }
     }
 
+    public static func setAnonymousUsageTracked(isAnonymousUsageTracked: Bool) {
+        if let _implementation = implementation {
+            _implementation.setAnonymousUsageTracked(isAnonymousUsageTracked: isAnonymousUsageTracked)
+        }
+    }
+
+    public static func getAnonymousUsageTracked() -> Bool {
+        return implementation?.getAnonymousUsageTracked() ?? false
+    }
     // MARK: - SDK
     
-    public static func setEmail(_ email: String?, _ authToken: String? = nil, _ successHandler: OnSuccessHandler? = nil, _ failureHandler: OnFailureHandler? = nil) {
-        implementation?.setEmail(email, authToken: authToken, successHandler: successHandler, failureHandler: failureHandler)
+    public static func setEmail(_ email: String?, _ authToken: String? = nil,  _ identityResolution: IterableIdentityResolution? = nil, _ successHandler: OnSuccessHandler? = nil, _ failureHandler: OnFailureHandler? = nil) {
+        implementation?.setEmail(email, authToken: authToken, successHandler: successHandler, failureHandler: failureHandler, identityResolution: identityResolution)
     }
     
-    public static func setUserId(_ userId: String?, _ authToken: String? = nil, _ successHandler: OnSuccessHandler? = nil, _ failureHandler: OnFailureHandler? = nil) {
-        implementation?.setUserId(userId, authToken: authToken, successHandler: successHandler, failureHandler: failureHandler)
+    public static func setUserId(_ userId: String?, _ authToken: String? = nil,  _ identityResolution: IterableIdentityResolution? = nil, _ successHandler: OnSuccessHandler? = nil, _ failureHandler: OnFailureHandler? = nil) {
+        implementation?.setUserId(userId, authToken: authToken, successHandler: successHandler, failureHandler: failureHandler, identityResolution: identityResolution)
     }
     
     /// Handle a Universal Link

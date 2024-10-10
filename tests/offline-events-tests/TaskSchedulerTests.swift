@@ -123,6 +123,6 @@ class TaskSchedulerTests: XCTestCase {
 
 extension TaskSchedulerTests: AuthProvider {
     var auth: Auth {
-        Auth(userId: nil, email: "user@example.com", authToken: nil)
+        Auth(userId: nil, email: "user@example.com", authToken: nil, userIdAnon: nil)
     }
 }
